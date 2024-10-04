@@ -2,6 +2,9 @@
 import styled from 'styled-components';
 import React from 'react';
 import Link from 'next/link'; // Import Link component
+import { useWallet } from '../../component/walletConnect';
+import init from '../../component/contractExecution';
+import mintToken from '../../component/contractExecution';
 
 const events = [
   { 
@@ -29,6 +32,31 @@ const events = [
 ];
 
 export default function EventPage() {
+  const defaultAccount = useWallet();
+
+  const handleBuyTicket = () => {
+    if (!defaultAccount) {
+      alert("Please connect your wallet to buy tickets!");
+    } else {
+      try{
+        init();
+      } catch (error) {
+        console.error(error);
+    }
+  }
+}
+
+const handleMintToken = () => {
+  if (!defaultAccount) {
+    alert("Please connect your wallet to buy tickets!");
+  } else {
+    try{
+      mintToken();
+    } catch (error) {
+      console.error(error);
+  }
+}
+}
 
   return (
     <Container>
@@ -45,6 +73,9 @@ export default function EventPage() {
           </Link>
         ))}
       </EventList>
+        <button onClick={handleBuyTicket}>buy ticket</button>
+        <br />
+        <button onClick={handleMintToken}>mint token</button>
     </Container>
   );
 };
