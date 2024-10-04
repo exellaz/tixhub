@@ -8,6 +8,7 @@ contract TixHub is ERC721 {
 	address payable public owner;
 	uint256 public totalSupply = 0;
 	uint256 public totalOccasions = 0;
+	
 	event Withdrawn(address organizer, uint256 organizerAmount, uint256 ownerAmount);
 
 	constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) payable {
@@ -48,7 +49,6 @@ contract TixHub is ERC721 {
 		string memory _location
 	) public onlyOwner {
 		totalOccasions++;
-
 		occasions[totalOccasions] = Occasion(
 			totalOccasions,
 			_organizer,
@@ -70,13 +70,13 @@ contract TixHub is ERC721 {
 		require(mintedTickets[_id][msg.sender] < occasions[_id].ticketsPerUser, "Max tickets minted");
 		require(msg.value >= occasions[_id].cost, "Insufficient ETH");
 
-	occasions[_id].ticketsLeft -= 1;
-	mintedTickets[_id][msg.sender]++;
+		totalSupply++;
+		_safeMint(msg.sender, totalSupply);
+		occasions[_id].ticketsLeft -= 1;
+		occasions[_id].totalCollected += msg.value;
 
-	totalSupply++;
-	_safeMint(msg.sender, totalSupply);
-	_ownedTokens[msg.sender].push(totalSupply);
-	occasions[_id].totalCollected += msg.value;
+		mintedTickets[_id][msg.sender]++;
+		_ownedTokens[msg.sender].push(totalSupply);
 	}
 
 	function withdrawFunds(uint256 _id) external {
