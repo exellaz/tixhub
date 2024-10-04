@@ -1,6 +1,6 @@
 "use client"; //need because of styled-components
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link'; // Import Link component
 
 const events = [
@@ -35,7 +35,7 @@ export default function EventPage() {
       <Title2>Upcoming Event</Title2>
       <EventList>
         {events.map(event => (
-          <Link href={`/details/${event.id}`} key={event.id} passHref>
+          <Link href={{ pathname: '/details'}}>
             <EventCard>
               <EventImage src={event.image} alt={`Event ${event.id}`} />
               <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
