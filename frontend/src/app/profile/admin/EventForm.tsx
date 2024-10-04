@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { EventData } from './types'
 
-const EventForm = ({ onSubmit }) => {
+interface EventFormProps {
+	onSubmit: (eventData: EventData) => void
+}
+
+const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 	const [eventName, setEventName] = useState('');
 	const [eventDate, setEventDate] = useState('');
 	const [eventVenue, setEventVenue] = useState('');
