@@ -1,7 +1,6 @@
 "use client"; //need because of styled-components
 import styled from 'styled-components';
-import Layout from '../layout';
-import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const events = [
   { 
@@ -28,94 +27,27 @@ const events = [
   // Add more events as needed
 ];
 
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-const calculateTimeLeft = (): TimeLeft => {
-  const difference = +new Date('2024-11-05') - +new Date();
-  let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-  if (difference > 0) {
-    timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
-    };
-  }
-
-  return timeLeft;
-};
-
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <TimerContainer>
-      <TimeBox>{timeLeft.days || '0'}<Label>Days</Label></TimeBox>
-      <TimeBox>{timeLeft.hours || '0'}<Label>Hours</Label></TimeBox>
-      <TimeBox>{timeLeft.minutes || '0'}<Label>Minutes</Label></TimeBox>
-      <TimeBox>{timeLeft.seconds || '0'}<Label>Seconds</Label></TimeBox>
-    </TimerContainer>
-  );
-};
-
 export default function EventPage() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
-
   return (
-    <Layout>
       <PageBackground>
-        <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
-        <MainContainer>
-          <TextContainer>
-            <WorldTourSign>WORLD TOUR</WorldTourSign>
-            <Title>Blackpink in Your <PinkColor> Area </PinkColor></Title>
-            <Description>Don't miss the chance, get your ticket now!</Description>
-            <CountdownTimer />
-            <BuyButton>Buy Ticket</BuyButton>
-          </TextContainer>
-          <ImageContainer>
-            <TitleImage src="/images/blackpink.png" alt="Blackpink Image" />
-          </ImageContainer>
-        </MainContainer>
         <Container>
-          <Title2>Upcoming Event</Title2>
+          <Title2>Available Event</Title2>
           <EventList>
             {events.map(event => (
-              <EventCard key={event.id}>
-                <EventImage src={event.image} alt={`Event ${event.id}`} />
-                <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
-                <EventDate>{event.date}</EventDate>    {/* Displays date */}
-                <EventPrice>{event.price}</EventPrice> {/* Displays price */}
-              </EventCard>
+              <Link href="/details/page" key={event.id} passHref>
+                <EventCard>
+                  <EventImage src={event.image} alt={`Event ${event.id}`} />
+                  <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
+                  <EventDate>{event.date}</EventDate>    {/* Displays date */}
+                  <EventPrice>{event.price}</EventPrice> {/* Displays price */}
+                </EventCard>
+              </Link>
             ))}
           </EventList>
         </Container>
       </PageBackground>
-    </Layout>
   );
-};
+}
 
 const PageBackground = styled.div`
   position: relative;
@@ -124,52 +56,11 @@ const PageBackground = styled.div`
   color: white;
 `;
 
-const HeaderImage = styled.img`
-  width: 100%;
-  height: auto;
-  display: block;
-  opacity: 0.3; 
-`;
-
-const MainContainer = styled.div`
+const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 50px;
-  left: 20px;
-  right: 20px;
-  padding: 50px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  height: 450px;
-`;
-
-const TextContainer = styled.div`
-  flex: 1;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: left;
-  margin-left: 60px;
-`;
-
-const ImageContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 100px;
-`;
-
-const WorldTourSign = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
+  padding: 20px;
 `;
 
 const Title2 = styled.h1`
@@ -177,39 +68,6 @@ const Title2 = styled.h1`
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
-`;
-
-const Description = styled.p`
-  margin-top: 10px;
-  font-size: 1rem;
-`;
-
-const BuyButton = styled.button`
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: black;
-  background-color: pink;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #585554; //lighter black
-    color: white;
-  }
-`;
-
-const TitleImage = styled.img`
-  width: 300px; /* Adjust the size as needed */
-  height: auto;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
 `;
 
 const EventList = styled.div`
@@ -229,6 +87,11 @@ const EventCard = styled.div`
   text-align: center;
   overflow: hidden;
   flex-shrink: 0; /* Prevent shrinking */
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+
+  &:hover {
+    transform: translateY(-10px); /* Move the card up on hover */
+  }
 `;
 
 const EventImage = styled.img`
@@ -255,28 +118,4 @@ const EventPrice = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
-`;
-
-const PinkColor = styled.span`
-  color: pink;
-`;
-
-const TimerContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-
-const TimeBox = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-  min-width: 60px;
-`;
-
-const Label = styled.div`
-  font-size: 0.8rem;
-  margin-top: 5px;
 `;

@@ -5,9 +5,9 @@ export default function Home() {
   return (
       <PageContainer>
         <TextContainer>
-          <MainTitle>D'Ticket</MainTitle>
-          <Subtitle>Your one stop shop for authentic tickets!</Subtitle>
-          <Description>"Buy authentic tickets straight from event holders!"</Description>
+          <MainTitle>TixHub</MainTitle>
+          <Subtitle>Your trusted destination for authentic tickets!</Subtitle>
+          <Description>"Purchase genuine tickets directly from event organizers! "</Description>
         </TextContainer>
       </PageContainer>
   );
