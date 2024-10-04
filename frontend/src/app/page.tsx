@@ -13,6 +13,7 @@ export default function Home() {
   );
 }
 
+/////////////////////////////// STYLING ///////////////////////////////////
 const PageContainer = styled.div`
  height: 100vh;
   width: 100%;

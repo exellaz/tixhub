@@ -23,40 +23,16 @@ const shortenAddress = (address: string) => {
 const NavBar = () => {
   const [defaultAccount, setDefaultAccount] = useState<string | null>(null); //defaultAccount is null
 
-  // Check local storage for the connected wallet address on component mount
   useEffect(() => {
-    const storedAccount = localStorage.getItem('defaultAccount');
-    if (storedAccount) { //check if the account is stored
-      setDefaultAccount(storedAccount); //set the default account
-    } else {
-      getCurrentAccount(); //if not get the current account from metamask
-    }
+    if (defaultAccount) { //check if the account is stored
+      setDefaultAccount(defaultAccount); //set the default account
+    } 
 
     ////check if metamask change account then the account of the button also change
     if (window.ethereum) { //check if metamask is installed
       window.ethereum.on('accountsChanged', handleAccountChange); 
     }
   }, []);
-
-  //function to get the current MetaMask account
-  const getCurrentAccount = async () => {
-    if (window.ethereum) { //check if metamask is installed
-      try {
-        // Request account access if needed
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        if (accounts.length > 0) {
-          accountChangedHandler(accounts[0]); //get the first account
-        } else {
-          console.log('No accounts found');
-        }
-      } catch (error) {
-        console.error("Error fetching accounts", error);
-      }
-    } else {
-      console.log("Please install MetaMask!");
-    }
-  };
-
 
   //function to connect wallet
   const connectWalletHandler = async () => {
@@ -85,7 +61,6 @@ const NavBar = () => {
   //function for handling account change
   const accountChangedHandler = (account: string) => {
     setDefaultAccount(account); //set the default account
-    localStorage.setItem('defaultAccount', account); //store the account in local storage
   };
 
   return (

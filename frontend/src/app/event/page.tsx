@@ -1,6 +1,5 @@
 "use client"; //need because of styled-components
 import styled from 'styled-components';
-import Layout from '../layout';
 import { useState, useEffect } from 'react';
 
 const events = [
@@ -73,18 +72,8 @@ const CountdownTimer = () => {
 };
 
 export default function EventPage() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
 
   return (
-    <Layout>
       <PageBackground>
         <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
         <MainContainer>
@@ -113,7 +102,6 @@ export default function EventPage() {
           </EventList>
         </Container>
       </PageBackground>
-    </Layout>
   );
 };
 
