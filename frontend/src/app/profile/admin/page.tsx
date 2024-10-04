@@ -6,16 +6,35 @@ import { EventData } from './types'
 
 export const CreateEventPage = () => {
 
-	const handleEventCreate = (eventData: EventData) => {
-		console.log('Event Data:', eventData)
-		console.log('Create new event...')
-	}
+    const handleEventCreate = async (eventData: EventData) => {
+        console.log('Event Data:', eventData)
+        console.log('Create new event...')
 
-	return (
-		<div>
-			<EventForm onSubmit={handleEventCreate} />
-		</div>
-	)
+        try {
+            const response = await fetch('http://localhost:3001/api/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(eventData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.text();
+            console.log(result);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    return (
+        <div>
+            <EventForm onSubmit={handleEventCreate} />
+        </div>
+    )
 }
 
 export default CreateEventPage
