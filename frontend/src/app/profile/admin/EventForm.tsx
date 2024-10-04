@@ -90,6 +90,7 @@ const EventForm = ({ onSubmit }) => {
 
 export default EventForm
 
+/////////////////////////////// STYLING ///////////////////////////////////
 const CenteredContainer = styled.div`
   display: flex;
   flex-direction: column;

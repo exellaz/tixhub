@@ -49,6 +49,7 @@ export default function EventPage() {
   );
 };
 
+/////////////////////////////// STYLING ///////////////////////////////////
 const Container = styled.div`
   display: flex;
   flex-direction: column;

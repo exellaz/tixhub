@@ -27,7 +27,7 @@ const NavBar = () => {
         {defaultAccount ? (
           <UserAddress>
             <Image src="/images/metamask_icon.png" alt="MetaMask Icon" width={24} height={24} />
-            {shortenAddress(defaultAccount)}
+            <TextAddress>{shortenAddress(defaultAccount)}</TextAddress>
           </UserAddress>
         ) : (
           <ConnectButton onClick={connectWallet}>Connect Wallet</ConnectButton>
@@ -37,6 +37,7 @@ const NavBar = () => {
   );
 };
 
+/////////////////////////////// STYLING ///////////////////////////////////
 const NavBarContainer = styled.nav`
   background-color: black; /* bg-gray-800 */
   padding: 1rem; /* p-4 */
@@ -78,6 +79,12 @@ const UserAddress = styled.div`
   background-color: #2e2e2e; /* bg-blue-500 */
   padding: 0.5rem 1rem; /* px-4 py-2 */
   border-radius: 0.25rem; /* rounded */
+  display: flex;
+  align-items: center;
+`;
+
+const TextAddress = styled.div`
+  margin-left: 8px;
 `;
 
 export default NavBar;
