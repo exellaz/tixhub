@@ -8,6 +8,7 @@ contract TixHub is ERC721 {
 	address payable public owner;
 	uint256 public totalSupply = 0;
 	uint256 public totalOccasions = 0;
+	event Withdrawn(address organizer, uint256 organizerAmount, uint256 ownerAmount);
 
 	constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) payable {
 		owner = payable(msg.sender);
@@ -75,5 +76,23 @@ contract TixHub is ERC721 {
 	totalSupply++;
 	_safeMint(msg.sender, totalSupply);
 	_ownedTokens[msg.sender].push(totalSupply);
+	occasions[_id].totalCollected += msg.value;
+	}
+
+	function withdrawFunds(uint256 _id) external {
+		require(_id > 0 && _id <= totalOccasions, "Invalid occasion ID");
+		Occasion memory occasion = occasions[_id];
+		require(msg.sender == occasion.organizer, "Only the organizer can withdraw");
+		require(occasion.totalCollected > 0, "No funds to withdraw");
+
+		uint256 totalAmount = occasion.totalCollected;
+		uint256 ownerShare = (totalAmount * 5) / 100;
+		uint256 organizerShare = totalAmount - ownerShare;
+
+		occasion.totalCollected = 0;
+		payable(owner).transfer(ownerShare);
+		payable(occasion.organizer).transfer(organizerShare);
+
+		emit Withdrawn(occasion.organizer, organizerShare, ownerShare);
 	}
 }
