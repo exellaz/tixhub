@@ -1,6 +1,8 @@
 "use client"; //need because of styled-components
 import styled from 'styled-components';
-import Link from 'next/link';
+import Layout from '../layout';
+import { useState, useEffect } from 'react';
+import Link from 'next/link'; // Import Link component
 
 const events = [
   { 
@@ -28,33 +30,34 @@ const events = [
 ];
 
 export default function EventPage() {
-  return (
-      <PageBackground>
-        <Container>
-          <Title2>Available Event</Title2>
-          <EventList>
-            {events.map(event => (
-              <Link href="/details/page" key={event.id} passHref>
-                <EventCard>
-                  <EventImage src={event.image} alt={`Event ${event.id}`} />
-                  <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
-                  <EventDate>{event.date}</EventDate>    {/* Displays date */}
-                  <EventPrice>{event.price}</EventPrice> {/* Displays price */}
-                </EventCard>
-              </Link>
-            ))}
-          </EventList>
-        </Container>
-      </PageBackground>
-  );
-}
+  const [isClient, setIsClient] = useState(false);
 
-const PageBackground = styled.div`
-  position: relative;
-  background-color: black;
-  min-height: 100vh;
-  color: white;
-`;
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
+  return (
+    <Container>
+      <Title2>Upcoming Event</Title2>
+      <EventList>
+        {events.map(event => (
+          <Link href={`/details/${event.id}`} key={event.id} passHref>
+            <EventCard>
+              <EventImage src={event.image} alt={`Event ${event.id}`} />
+              <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
+              <EventDate>{event.date}</EventDate>    {/* Displays date */}
+              <EventPrice>{event.price}</EventPrice> {/* Displays price */}
+            </EventCard>
+          </Link>
+        ))}
+      </EventList>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   display: flex;
@@ -63,18 +66,18 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const Title2 = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
 const EventList = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: nowrap; /* Ensure all items are in one line */
   overflow-x: auto; /* Allow horizontal scrolling if needed */
+`;
+
+const Title2 = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const EventCard = styled.div`
@@ -87,10 +90,11 @@ const EventCard = styled.div`
   text-align: center;
   overflow: hidden;
   flex-shrink: 0; /* Prevent shrinking */
-  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transition: transform 0.3s ease; /* Add transition */
+  cursor: pointer; /* Add pointer cursor on hover */
 
   &:hover {
-    transform: translateY(-10px); /* Move the card up on hover */
+    transform: translateY(-10px); /* Move up on hover */
   }
 `;
 
