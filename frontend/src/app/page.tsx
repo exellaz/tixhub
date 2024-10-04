@@ -1,10 +1,14 @@
 "use client"; //need because of styled-components 
 import styled from 'styled-components';
+import { useWallet } from '../component/walletConnect';
 
 export default function Home() {
+  const { defaultAccount } = useWallet();
+
   return (
       <PageContainer>
         <TextContainer>
+          {defaultAccount ? <p>{defaultAccount}</p> : <p>No account</p>}
           <MainTitle>D'Ticket</MainTitle>
           <Subtitle>Your one stop shop for authentic tickets!</Subtitle>
           <Description>"Buy authentic tickets straight from event holders!"</Description>

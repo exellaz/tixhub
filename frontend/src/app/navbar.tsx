@@ -1,66 +1,18 @@
 "use client"; //need because of styled-components
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useWallet } from '../component/walletConnect';
 import Image from 'next/image'; // Import Image component
-import Web3 from 'web3';
 
-declare global {
-  interface Window {
-    ethereum: any;
-  }
-}
-
-//function shorten Address
-const shortenAddress = (address: string) => {
-  if (address.length > 10) { //if address is more than 10
-    return `${address.slice(0, 6)}...${address.slice(-4)}`; //return the first 6 and last 4
-  }
-  return address;
-};
-
-//navigation bar
 const NavBar = () => {
-  const [defaultAccount, setDefaultAccount] = useState<string | null>(null); //defaultAccount is null
+  const { defaultAccount, connectWallet } = useWallet();
 
-  useEffect(() => {
-    if (defaultAccount) { //check if the account is stored
-      setDefaultAccount(defaultAccount); //set the default account
-    } 
-
-    ////check if metamask change account then the account of the button also change
-    if (window.ethereum) { //check if metamask is installed
-      window.ethereum.on('accountsChanged', handleAccountChange); 
+  //function shorten Address
+  const shortenAddress = (address: string) => {
+    if (address.length > 10) { //if address is more than 10
+      return `${address.slice(0, 6)}...${address.slice(-4)}`; //return the first 6 and last 4
     }
-  }, []);
-
-  //function to connect wallet
-  const connectWalletHandler = async () => {
-    if (window.ethereum) { //check the metamask is installed
-      try { //try to connect
-        const result = await window.ethereum.request({ method: 'eth_requestAccounts' }); //request account from metamask
-        accountChangedHandler(result[0]);  //get the first account
-        window.ethereum.on('accountsChanged', handleAccountChange); //check if metamask change account then the account of the button also change
-      } catch (error) { //if fail
-        console.error("User denied account access");
-      }
-    } else { //if metamask is not installed
-      console.log("Please install MetaMask!");
-    }
-  };
-
-  //function for handling account change
-  const handleAccountChange = (accounts: string[]) => { //array of account
-    if (accounts.length > 0) { //if account is found
-      accountChangedHandler(accounts[0]); //get the first account
-    } else {
-      console.log('No account found'); //if no account found
-    }
-  };
-
-  //function for handling account change
-  const accountChangedHandler = (account: string) => {
-    setDefaultAccount(account); //set the default account
+    return address;
   };
 
   return (
@@ -78,7 +30,7 @@ const NavBar = () => {
             {shortenAddress(defaultAccount)}
           </UserAddress>
         ) : (
-          <ConnectButton onClick={connectWalletHandler}>Connect Wallet</ConnectButton>
+          <ConnectButton onClick={connectWallet}>Connect Wallet</ConnectButton>
         )}
       </NavBarContent>
     </NavBarContainer>
