@@ -31,7 +31,6 @@ const events = [
 export default function EventPage() {
 
   return (
-<<<<<<< HEAD
     <Container>
       <Title2>Upcoming Event</Title2>
       <EventList>
@@ -47,36 +46,6 @@ export default function EventPage() {
         ))}
       </EventList>
     </Container>
-=======
-      <PageBackground>
-        <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
-        <MainContainer>
-          <TextContainer>
-            <WorldTourSign>WORLD TOUR</WorldTourSign>
-            <Title>Blackpink in Your <PinkColor> Area </PinkColor></Title>
-            <Description>Don't miss the chance, get your ticket now!</Description>
-            <CountdownTimer />
-            <BuyButton>Buy Ticket</BuyButton>
-          </TextContainer>
-          <ImageContainer>
-            <TitleImage src="/images/blackpink.png" alt="Blackpink Image" />
-          </ImageContainer>
-        </MainContainer>
-        <Container>
-          <Title2>Upcoming Event</Title2>
-          <EventList>
-            {events.map(event => (
-              <EventCard key={event.id}>
-                <EventImage src={event.image} alt={`Event ${event.id}`} />
-                <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
-                <EventDate>{event.date}</EventDate>    {/* Displays date */}
-                <EventPrice>{event.price}</EventPrice> {/* Displays price */}
-              </EventCard>
-            ))}
-          </EventList>
-        </Container>
-      </PageBackground>
->>>>>>> cbca186427f6b2a7ca47695ca14892f5e2e4b841
   );
 };
 
