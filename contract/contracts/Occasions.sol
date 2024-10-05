@@ -8,7 +8,7 @@ contract TixHub is ERC721 {
 	address payable public owner;
 	uint256 public totalSupply = 0;
 	uint256 public totalOccasions = 0;
-	
+
 	event Withdrawn(address organizer, uint256 organizerAmount, uint256 ownerAmount);
 
 	constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) payable {
@@ -94,5 +94,13 @@ contract TixHub is ERC721 {
 		payable(occasion.organizer).transfer(organizerShare);
 
 		emit Withdrawn(occasion.organizer, organizerShare, ownerShare);
+	}
+
+	function getOccasion(uint256 _id) public view returns (Occasion memory) {
+		return occasions[_id];
+	}
+
+	function getTokensOfUser(address user) public view returns (uint256[] memory) {
+		return _ownedTokens[user];
 	}
 }
