@@ -5,26 +5,26 @@ import Link from 'next/link'; // Import Link component
 import Record from '../admin/events.json'; // Import JSON file
 
 const staticEvents = [
-  { 
-    id: 1, 
-    image: '/images/event1.jpg', 
-    title: 'Taylor Swift | The Era Tour', 
-    date: '2024-11-05', 
-    price: '1 ETH' 
+  {
+    id: 1,
+    image: '/images/event1.jpg',
+    title: 'Taylor Swift | The Era Tour',
+    date: '2024-11-05',
+    price: '1 ETH'
   },
-  { 
-    id: 2, 
-    image: '/images/event2.jpg', 
-    title: 'Cold Play Summer Tour', 
-    date: '2024-12-11', 
-    price: '1 ETH' 
+  {
+    id: 2,
+    image: '/images/event2.jpg',
+    title: 'Cold Play Summer Tour',
+    date: '2024-12-11',
+    price: '1 ETH'
   },
-  { 
-    id: 3, 
-    image: '/images/event3.jpg', 
-    title: 'Bruno Mars 24K Magic Tour', 
-    date: '2025-01-03', 
-    price: '1 ETH' 
+  {
+    id: 3,
+    image: '/images/event3.jpg',
+    title: 'Bruno Mars 24K Magic Tour',
+    date: '2025-01-03',
+    price: '1 ETH'
   },
   // Add more events as needed
 ];
@@ -83,7 +83,7 @@ const Title2 = styled.h1`
 `;
 
 const EventCard = styled.div`
-  background-color: #fff; 
+  background-color: #fff;
   border: 1px solid;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
