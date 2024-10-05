@@ -15,35 +15,9 @@ interface EventData {
   organiserAddress: string;
 }
 
-const staticEvents = [
-  {
-    id: 1,
-    image: '/images/event1.jpg',
-    title: 'Taylor Swift | The Era Tour',
-    date: '2024-11-05',
-    price: '1 ETH'
-  },
-  {
-    id: 2,
-    image: '/images/event2.jpg',
-    title: 'Cold Play Summer Tour',
-    date: '2024-12-11',
-    price: '1 ETH'
-  },
-  {
-    id: 3,
-    image: '/images/event3.jpg',
-    title: 'Bruno Mars 24K Magic Tour',
-    date: '2025-01-03',
-    price: '1 ETH'
-  },
-  // Add more events as needed
-];
-
 const events = [
-  ...staticEvents,
   ...Record.map((event: EventData, index: number) => ({
-    id: staticEvents.length + index + 1, // Ensure unique IDs
+    id: index + 1, // Ensure unique IDs
     image: '/images/ETHKL2024.jpg', // Default image or map accordingly
     title: event.eventName,
     date: event.eventDate,
