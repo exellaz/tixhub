@@ -2,18 +2,35 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useWallet } from '../component/walletConnect';
-import Image from 'next/image'; // Import Image component
+import Image from 'next/image';
+import { useState, useEffect } from 'react'; // Import useState and useEffect
 
 const NavBar = () => {
   const { defaultAccount, connectWallet, disconnectWallet } = useWallet();
+  const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
+  const [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
 
-  //function shorten Address
+  // Function to shorten address
   const shortenAddress = (address: string) => {
-    if (address.length > 10) { //if address is more than 10
-      return `${address.slice(0, 6)}...${address.slice(-4)}`; //return the first 6 and last 4
+    if (address.length > 10) {
+      return `${address.slice(0, 6)}...${address.slice(-4)}`;
     }
     return address;
   };
+
+  // Function to toggle dropdown visibility
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  // Check if the connected address is the admin address
+  useEffect(() => {
+    if (defaultAccount && defaultAccount.toLowerCase() === '0xebf3dd4fb5466791f924140aaa3d5b9387e4a19e') {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [defaultAccount]);
 
   return (
     <NavBarContainer>
@@ -23,12 +40,18 @@ const NavBar = () => {
           <NavLink href="/">Home</NavLink>
           <NavLink href="/event">Event</NavLink>
           <NavLink href="/profile">Profile</NavLink>
+          {isAdmin && <NavLink href="/admin">Admin</NavLink>}
         </NavLinks>
         {defaultAccount ? (
           <UserAddress>
             <Image src="/images/metamask_icon.png" alt="MetaMask Icon" width={24} height={24} />
             <TextAddress>{shortenAddress(defaultAccount)}</TextAddress>
-            <SignOutButton onClick={disconnectWallet}>Sign Out</SignOutButton>
+            <DropdownButton onClick={toggleDropdown}>▼</DropdownButton>
+            {dropdownVisible && (
+              <DropdownMenu>
+                <DropdownItem onClick={disconnectWallet}>Sign Out</DropdownItem>
+              </DropdownMenu>
+            )}
           </UserAddress>
         ) : (
           <ConnectButton onClick={connectWallet}>Connect Wallet</ConnectButton>
@@ -40,8 +63,8 @@ const NavBar = () => {
 
 /////////////////////////////// STYLING ///////////////////////////////////
 const NavBarContainer = styled.nav`
-  background-color: black; /* bg-gray-800 */
-  padding: 1rem; /* p-4 */
+  background-color: black;
+  padding: 1rem;
 `;
 
 const NavBarContent = styled.div`
@@ -54,13 +77,13 @@ const NavBarContent = styled.div`
 
 const Branding = styled.div`
   color: white;
-  font-size: 1.5rem; /* text-2xl */
+  font-size: 1.5rem;
   font-weight: bold;
 `;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 1rem; /* space-x-4 */
+  gap: 1rem;
 `;
 
 const NavLink = styled(Link)`
@@ -68,33 +91,50 @@ const NavLink = styled(Link)`
 `;
 
 const ConnectButton = styled.button`
-  background-color: #2e2e2e; /* bg-blue-500 */
+  background-color: #2e2e2e;
   color: white;
-  padding: 0.5rem 1rem; /* px-4 py-2 */
-  border-radius: 0.25rem; /* rounded */
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
 `;
 
 const UserAddress = styled.div`
   color: white;
   margin-left: 1rem;
-  background-color: #2e2e2e; /* bg-blue-500 */
-  padding: 0.5rem 1rem; /* px-4 py-2 */
-  border-radius: 0.25rem; /* rounded */
+  background-color: #2e2e2e;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 const TextAddress = styled.div`
   margin-left: 8px;
 `;
 
-const SignOutButton = styled.button`
-  border-radius: 0.25rem; /* rounded */
-  padding: 0.2rem 0.9rem; /* px-4 py-2 */
-  margin-left: 0.5rem; /* mr-2 */
-  background-color: #404040; /* bg-blue-500 */
+const DropdownButton = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 8px;
+  cursor: pointer;
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #2e2e2e;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+`;
+
+const DropdownItem = styled.div`
+  padding: 0.5rem 1rem;
+  cursor: pointer;
   &:hover {
-    background-color: #3C3C3C; /* bg-blue-700 */
+    background-color: #3C3C3C;
   }
 `;
 
