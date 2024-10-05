@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Container, EventList, EventCard, EventImage, EventTitle, EventDate, EventPrice } from '../event/page';
 import ABI from '../../component/ABI.json';
 import { CONTRACT_ADDRESS } from '@/component/contractAddress';
+import Modal from './prompt';
 
 declare global {
   interface Window {
@@ -26,6 +27,8 @@ export default function ProfilePage() {
   const [tickets, setTickets] = useState<EventData[]>([]);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [contract, setContract] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.ethereum) {
@@ -47,12 +50,20 @@ export default function ProfilePage() {
     fetchTickets();
   }, [web3, contract]);
 
+	const handleEventClick = (eventId: string) => {
+		const event = tickets.find(ticket => ticket.id === eventId)
+		if (event) {
+			setSelectedEvent(event)
+			setIsModalOpen(true)
+		}
+	};
+
   return (
 	<Container>
 		<EventList>
 		{tickets.map((event, index) => (
 			<Link key={event.id || index} href={{ pathname: '/details'}}>
-			  <EventCard>
+			  <EventCard key={event.id} onClick={() =>handleEventClick(event.id)}>
 				<EventImage src={event.image} alt={`Event ${event.id}`} />
 				<EventTitle>{event.title}</EventTitle>  {/* Displays title */}
 				<EventDate>{event.date}</EventDate>    {/* Displays date */}
