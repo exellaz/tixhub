@@ -22,5 +22,17 @@
     "ticketsPerAccount": "",
     "organiserAddress": "",
     "id": 5
+  },
+  {
+    "eventName": "test2",
+    "eventDate": "",
+    "eventTime": "",
+    "eventVenue": "",
+    "eventDescription": "",
+    "ticketPrice": "",
+    "ticketAmount": "",
+    "ticketsPerAccount": "",
+    "organiserAddress": "",
+    "id": 6
   }
 ]

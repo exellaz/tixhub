@@ -30,6 +30,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 		organiserAddress,
 	  };
 	  onSubmit(eventData);
+	  alert('Successfully created event'); // Show pop-up alert message
 	};
 
 	return (
