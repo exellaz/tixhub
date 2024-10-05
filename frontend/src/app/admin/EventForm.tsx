@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { EventData } from './types';
+import { createEvent } from '../../component/contractExecution';
 
 interface EventFormProps {
   onSubmit: (eventData: EventData) => void;

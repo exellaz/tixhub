@@ -1,7 +1,7 @@
 import { CONTRACT_ADDRESS } from './contractAddress';
 import { Web3 } from 'web3';
 import ABI from './ABI.json';
-import EventInfo from '../app/event/eventInfo.json';
+import EventInfo from '../app/admin/events.json';
 
 declare global {
     interface Window {
@@ -12,22 +12,22 @@ declare global {
 const web3 = new Web3(window.ethereum);
 const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
-export async function init() {
+export async function createEvent() {
     const account = await web3.eth.getAccounts();
-    const defaultAccount = account[0];
+    const defaultAccount = localStorage.getItem('eventData');
 
     try {
         const event = EventInfo[0];
         const createOccasion = contract.methods.createOccasion(
-            event.organizer,
-            event.name,
-            event.description,
-            event.cost,
-            event.maxTickets,
-            event.ticketsPerUser,
-            event.date,
-            event.time,
-            event.location,
+            event.organiserAddress,
+            event.eventName,
+            event.eventDescription,
+            event.ticketPrice,
+            event.ticketAmount,
+            event.ticketsPerAccount,
+            event.eventDate,
+            event.eventTime,
+            event.eventVenue,
             ).send({ from: defaultAccount });
         console.log(createOccasion);
     } catch (error) {
@@ -46,7 +46,7 @@ export async function mintToken() {
         const createOccasion = contract.methods.mint(
             "3",
             exportNullifier
-            ).send({ from: defaultAccount, value: EventInfo[0].cost });
+            ).send({ from: defaultAccount, value: EventInfo[0].ticketPrice });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);
