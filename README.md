@@ -1,4 +1,9 @@
 # tixhub
+# TO LAUNCH TIXHUB
+Front-end: 	1) cd frontend && npm run dev
+			2) cd frontend/src/app/admin && node server.js
+Back-end:	1) cd contract && npm hardhat clean && npm hardhat compile && npm hardhat node
+			2) cd contract && npx hardhat ignition deploy ignition/modules/Occasion.js --network localhost
 
 ## CONTRACT INSTALLATION
 ```
@@ -17,5 +22,5 @@ npx hardhat node
 
 ## FRONTEND INSTALLATION
 ```
-npm install next react react-dom  next-transpile-modules webpack-bundle-analyzer gsap web3 @worldcoin/idkit 
+npm install next react react-dom  next-transpile-modules webpack-bundle-analyzer gsap web3 @worldcoin/idkit
 ```
