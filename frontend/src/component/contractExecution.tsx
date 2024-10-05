@@ -40,7 +40,6 @@ export async function createEvent(newEnt: any) {
 export async function mintToken() {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
-
     let exportNullifier = localStorage.getItem('nullifierHash')
     console.log(exportNullifier); // check does nullifier hash is stored in local storage
 
