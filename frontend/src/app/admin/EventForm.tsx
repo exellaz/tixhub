@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import { EventData } from './types'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { EventData } from './types';
 
 interface EventFormProps {
-	onSubmit: (eventData: EventData) => void
+  onSubmit: (eventData: EventData) => void;
 }
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
@@ -101,7 +101,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 	);
   };
 
-export default EventForm
+export default EventForm;
 
 /////////////////////////////// STYLING ///////////////////////////////////
 const CenteredContainer = styled.div`
@@ -111,17 +111,18 @@ const CenteredContainer = styled.div`
   justify-content: center;
   min-height: 100vh;
   text-align: center;
-`
+`;
 
 const Input = styled.input`
-	display: block;
-	margin-bottom: 10px;
-	padding: 8px;
-	font-size: 16px;
-	width: 100%;
-	max-width: 400px;
-	color: blue;
-`
+  display: block;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  color: blue;
+`;
+
 const Button = styled.button`
   margin: 20px 0;
   padding: 10px 20px;

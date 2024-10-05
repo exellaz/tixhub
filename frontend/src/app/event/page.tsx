@@ -1,13 +1,24 @@
-"use client"; //need because of styled-components
+"use client"; // needed for styled-components
 import styled from 'styled-components';
-import React from 'react';
-import Link from 'next/link'; // Import Link component
+import React, { useState } from 'react';
+import DetailsPage from '../details/page'; // Import DetailsPage component
 import Record from '../admin/events.json'; // Import JSON file
 import { IDKitWidget, VerificationLevel, ISuccessResult, useIDKit } from '@worldcoin/idkit';
 import { verify } from '../../component/verifyProof';
 import { useWallet } from '../../component/walletConnect';
 import { init } from '../../component/contractExecution';
 import { mintToken } from '../../component/contractExecution';
+
+interface EventData {
+  eventName: string;
+  eventDate: string;
+  eventVenue: string;
+  eventDescription: string;
+  ticketPrice: string;
+  ticketAmount: string;
+  ticketsPerAccount: string;
+  organiserAddress: string;
+}
 
 const staticEvents = [
   {
@@ -36,11 +47,12 @@ const staticEvents = [
 
 const events = [
   ...staticEvents,
-  ...Record.map((event, index) => ({
+  ...Record.map((event: EventData, index: number) => ({
     id: staticEvents.length + index + 1, // Ensure unique IDs
-    image: '/images/adele.png', // Default image or map accordingly
+    image: '/images/ETHKL2024.jpg', // Default image or map accordingly
     title: event.eventName,
     date: event.eventDate,
+    location: event.eventVenue,
     price: event.ticketPrice
   }))
 ];
@@ -144,6 +156,34 @@ export default function EventPage() {
 	  </Container>
 	);
   };
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+
+  const handleEventClick = (eventId: number) => {
+    setSelectedEventId(eventId); // Set the selected event ID when clicked
+  };
+
+  return (
+    <Container>
+      {selectedEventId === null ? (
+        <>
+          <Title2>Upcoming Event</Title2>
+          <EventList>
+            {events.map(event => (
+              <EventCard key={event.id} onClick={() => handleEventClick(event.id)}>
+                <EventImage src={event.image} alt={`Event ${event.id}`} />
+                <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
+                <EventDate>{event.date}</EventDate>    {/* Displays date */}
+                <EventPrice>{event.price}</EventPrice> {/* Displays price */}
+              </EventCard>
+            ))}
+          </EventList>
+        </>
+      ) : (
+        <DetailsPage eventId={selectedEventId} /> // Pass the selected event ID to DetailsPage
+      )}
+    </Container>
+  );
+};
 
 /////////////////////////////// STYLING ///////////////////////////////////
 const Container = styled.div`

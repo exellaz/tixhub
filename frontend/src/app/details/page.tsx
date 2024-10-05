@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Record from '../admin/events.json'; // Import JSON file
 
 interface TimeLeft {
   days: number;
@@ -46,36 +47,101 @@ const CountdownTimer = () => {
   );
 };
 
-export default function DetailsPage() {
-  const [isClient, setIsClient] = useState(false);
+interface DetailsPageProps {
+  eventId: number;
+}
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
+const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
+  const eventIdNumber = parseInt(eventId as unknown as string, 10);
+  const event = Record.find(event => event.id === eventId);
 
   return (
     <PageBackground>
-      <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
+      {eventIdNumber === 1 && (
+        <>
+          <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
+          <MainContainer>
+            <TextContainer>
+              <WorldTourSign>WORLD TOUR</WorldTourSign>
+              <Title>Taylor Swift The <PinkColor>Era Tour</PinkColor></Title>
+              <Description>Don't miss the chance, get your ticket now!</Description>
+              <Description>Location : National Stadium Bukit Jalil</Description>
+              <Description>Date : 2024 - 11 - 05</Description>
+              <CountdownTimer />
+              <BuyButton>Buy Ticket</BuyButton>
+            </TextContainer>
+            <ImageContainer>
+              <TitleImage src="/images/event1.jpg" alt="Taylor Swift Image" />
+            </ImageContainer>
+          </MainContainer>
+        </>
+      )}
+      {eventIdNumber === 2 && (
+        <>
+          <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
+          <MainContainer>
+            <TextContainer>
+              <WorldTourSign>WORLD TOUR</WorldTourSign>
+              <Title>Cold Play <PinkColor>Summer Tour</PinkColor></Title>
+              <Description>Don't miss the chance, get your ticket now!</Description>
+              <Description>Location : Arena of Stars Genting Highland</Description>
+              <Description>Date : 2024 - 12 - 11</Description>
+              <CountdownTimer />
+              <BuyButton>Buy Ticket</BuyButton>
+            </TextContainer>
+            <ImageContainer>
+              <TitleImage src="/images/event2.jpg" alt="Cold Play Image" />
+            </ImageContainer>
+          </MainContainer>
+        </>
+      )}
+      {eventIdNumber === 3 && (
+        <>
+          <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
+          <MainContainer>
+            <TextContainer>
+              <WorldTourSign>WORLD TOUR</WorldTourSign>
+              <Title>Bruno Mars <PinkColor>24K  Tour</PinkColor></Title>
+              <Description>Don't miss the chance, get your ticket now!</Description>
+              <Description>Location : Axiata Arena Bukit Jalil</Description>
+              <Description>Date : 2025 - 01 - 03</Description>
+              <CountdownTimer />
+              <BuyButton>Buy Ticket</BuyButton>
+            </TextContainer>
+            <ImageContainer>
+              <TitleImage src="/images/event3.jpg" alt="Bruno Mars Image" />
+            </ImageContainer>
+          </MainContainer>
+        </>
+      )}
+      {eventIdNumber > 3 && (
+        <>
+               <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
       <MainContainer>
         <TextContainer>
           <WorldTourSign>WORLD TOUR</WorldTourSign>
-          <Title>Taylor Swift The <PinkColor>Era Tour</PinkColor></Title>
+          <Title>{event.eventName}</Title>
           <Description>Don't miss the chance, get your ticket now!</Description>
-          <CountdownTimer />
+          <Description>Location: {event.eventVenue}</Description>
+          <Description>Date: {event.eventDate}</Description>
+          <CountdownTimer eventDate={event.eventDate} />
           <BuyButton>Buy Ticket</BuyButton>
         </TextContainer>
         <ImageContainer>
-          <TitleImage src="/images/event1.jpg" alt="Blackpink Image" />
+          <TitleImage src="/images/ETHKL2024.jpg" alt="Event Image" />
         </ImageContainer>
       </MainContainer>
+        </>
+      )}
+
+      {!eventIdNumber && <div>Event not found</div>}
     </PageBackground>
   );
-}
+};
 
+export default DetailsPage;
+
+// Styled components
 const PageBackground = styled.div`
   position: relative;
   background-color: black;
@@ -132,7 +198,7 @@ const Title = styled.h1`
 `;
 
 const PinkColor = styled.span`
-  color: pink;
+  color: blue;
 `;
 
 const BuyButton = styled.button`
@@ -141,7 +207,7 @@ const BuyButton = styled.button`
   font-size: 1rem;
   font-weight: bold;
   color: black;
-  background-color: pink;
+  background-color: #4ad0ff; //light blue
   border: none;
   border-radius: 5px;
   cursor: pointer;
