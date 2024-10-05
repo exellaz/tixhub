@@ -47,6 +47,7 @@ const events = [
     image: '/images/ETHKL2024.jpg', // Default image or map accordingly
     title: event.eventName,
     date: event.eventDate,
+    location: event.eventVenue,
     price: event.ticketPrice
   }))
 ];

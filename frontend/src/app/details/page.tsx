@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
+import Record from '../admin/events.json'; // Import JSON file
 
 interface TimeLeft {
   days: number;
@@ -53,6 +53,7 @@ interface DetailsPageProps {
 
 const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
   const eventIdNumber = parseInt(eventId as unknown as string, 10);
+  const event = Record.find(event => event.id === eventId);
 
   return (
     <PageBackground>
@@ -65,6 +66,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <Title>Taylor Swift The <PinkColor>Era Tour</PinkColor></Title>
               <Description>Don't miss the chance, get your ticket now!</Description>
               <Description>Location : National Stadium Bukit Jalil</Description>
+              <Description>Date : 2024 - 11 - 05</Description>
               <CountdownTimer />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
@@ -80,9 +82,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
           <MainContainer>
             <TextContainer>
               <WorldTourSign>WORLD TOUR</WorldTourSign>
-              <Title>Cold Play <PinkColor>Era Tour</PinkColor></Title>
+              <Title>Cold Play <PinkColor>Summer Tour</PinkColor></Title>
               <Description>Don't miss the chance, get your ticket now!</Description>
-              <Description>Location : Arena of Stars, Genting Highlands</Description>
+              <Description>Location : Arena of Stars Genting Highland</Description>
+              <Description>Date : 2024 - 12 - 11</Description>
               <CountdownTimer />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
@@ -98,9 +101,10 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
           <MainContainer>
             <TextContainer>
               <WorldTourSign>WORLD TOUR</WorldTourSign>
-              <Title>Bruno Mars <PinkColor>Era Tour</PinkColor></Title>
+              <Title>Bruno Mars <PinkColor>24K  Tour</PinkColor></Title>
               <Description>Don't miss the chance, get your ticket now!</Description>
               <Description>Location : Axiata Arena Bukit Jalil</Description>
+              <Description>Date : 2025 - 01 - 03</Description>
               <CountdownTimer />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
@@ -110,6 +114,26 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
           </MainContainer>
         </>
       )}
+      {eventIdNumber > 3 && (
+        <>
+               <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
+      <MainContainer>
+        <TextContainer>
+          <WorldTourSign>WORLD TOUR</WorldTourSign>
+          <Title>{event.eventName}</Title>
+          <Description>Don't miss the chance, get your ticket now!</Description>
+          <Description>Location: {event.eventVenue}</Description>
+          <Description>Date: {event.eventDate}</Description>
+          <CountdownTimer eventDate={event.eventDate} />
+          <BuyButton>Buy Ticket</BuyButton>
+        </TextContainer>
+        <ImageContainer>
+          <TitleImage src="/images/ETHKL2024.jpg" alt="Event Image" />
+        </ImageContainer>
+      </MainContainer>
+        </>
+      )}
+
       {!eventIdNumber && <div>Event not found</div>}
     </PageBackground>
   );
