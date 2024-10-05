@@ -25,7 +25,8 @@ const NavBar = () => {
 
   // Check if the connected address is the admin address
   useEffect(() => {
-    if (defaultAccount && defaultAccount.toLowerCase() === '0xebf3dd4fb5466791f924140aaa3d5b9387e4a19e') {
+    const adminAddress = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'.toLowerCase();
+    if (defaultAccount && defaultAccount.toLowerCase() === adminAddress) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
