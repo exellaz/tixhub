@@ -1,89 +1,14 @@
 [
   {
-    "id": 1,
-    "eventName": "Taylor Swift | The Era Tour",
-    "eventDate": "2024-11-05",
-    "eventTime": "",
-    "eventVenue": "",
-    "eventDescription": "",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": ""
-  },
-  {
-    "id": 2,
-    "eventName": "Cold Play Summer Tour",
-    "eventDate": "2024 - 12 - 11",
-    "eventTime": "",
-    "eventVenue": "",
-    "eventDescription": "",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": ""
-  },
-  {
-    "id": 3,
-    "eventName": "Bruno Mars 24K Magic Tour",
-    "eventDate": "2025-01-03",
-    "eventTime": "",
-    "eventVenue": "",
-    "eventDescription": "",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": ""
-  },
-  {
-    "id": 1,
-    "eventName": "Taylor Swift | The Era Tour",
-    "eventDate": "2024-11-05",
-    "eventTime": "",
-    "eventVenue": "National Stadium Bukit Jalil",
-    "eventDescription": "",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": "",
-    "eventPoster": "images/event1.jpg"
-  },
-  {
-    "id": 2,
-    "eventName": "Cold Play Summer Tour",
-    "eventDate": "2024 - 12 - 11",
-    "eventTime": "",
-    "eventVenue": "",
-    "eventDescription": "Axiata Areana Bukit Jalil",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": "",
-    "eventPoster": "images/event2.jpg"
-  },
-  {
-    "id": 3,
-    "eventName": "Bruno Mars 24K Magic Tour",
-    "eventDate": "2025-01-03",
-    "eventTime": "",
-    "eventVenue": "Arena of Stars Genting",
-    "eventDescription": "",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": ""
-  },
-  {
-    "eventName": "EKL",
+    "eventName": "kl",
     "eventDate": "2024-10-06",
-    "eventTime": "",
-    "eventVenue": "klcc",
-    "eventDescription": "klia",
-    "ticketPrice": "1 ETH",
-    "ticketAmount": "1",
-    "ticketsPerAccount": "1",
-    "organiserAddress": "0xCAFEERRW",
-    "eventPoster": "blob:http://localhost:3000/52d83689-caf4-4c12-a9ea-9451b2225992",
-    "id": 4
+    "eventTime": "07:00",
+    "eventVenue": "kl",
+    "eventDescription": "kl",
+    "ticketPrice": "1",
+    "ticketAmount": "100",
+    "ticketsPerAccount": "2",
+    "organiserAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "id": 1
   }
 ]

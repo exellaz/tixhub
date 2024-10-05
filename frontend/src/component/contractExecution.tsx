@@ -19,15 +19,15 @@ export async function createEvent(newEvent: any) {
     try {
         const event = newEvent;
         const createOccasion = contract.methods.createOccasion(
+            event.organiserAddress,
             event.eventName,
-            event.eventDate,
-            event.eventTime,
-            event.eventVenue,
             event.eventDescription,
             event.ticketPrice,
             event.ticketAmount,
             event.ticketsPerAccount,
-            event.organiserAddress,
+            event.eventDate,
+            event.eventTime,
+            event.eventVenue,
             ).send({ from: defaultAccount });
         console.log(createOccasion);
     } catch (error) {
@@ -35,18 +35,20 @@ export async function createEvent(newEvent: any) {
     }
 };
 
-export async function mintToken() {
+export async function mintToken(eventId) {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
 
     let exportNullifier = localStorage.getItem('nullifierHash')
+    let eventTicketPrice = localStorage.getItem('eventTicketPrice')
     console.log(exportNullifier); // check does nullifier hash is stored in local storage
+    console.log(eventTicketPrice); // check does event ticket price is stored in local storage
 
     try {
         const createOccasion = contract.methods.mint(
-            "3",
+            eventId,
             exportNullifier
-            ).send({ from: defaultAccount, value: EventInfo[0].ticketPrice });
+            ).send({ from: defaultAccount, value: eventTicketPrice });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);

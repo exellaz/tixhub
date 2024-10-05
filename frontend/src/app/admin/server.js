@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint to fetch events
-app.post('/api/events', (req, res) => {
+app.get('/api/events', (req, res) => {
   const filePath = path.join(__dirname, 'events.json');
 
   fs.readFile(filePath, 'utf8', (err, data) => {
@@ -27,21 +27,7 @@ app.post('/api/events', (req, res) => {
 
     try {
       const events = JSON.parse(data);
-      const newEvent = req.body;
-
-      // Add a new ID to the new event
-      newEvent.id = events.length ? events[events.length - 1].id + 1 : 1;
-
-      events.push(newEvent);
-
-      fs.writeFile(filePath, JSON.stringify(events, null, 2), (writeErr) => {
-        if (writeErr) {
-          console.error('Error writing file:', writeErr);
-          return res.status(500).send('Internal Server Error');
-        }
-
-        res.status(201).json(newEvent);
-      });
+      res.status(200).json(events);
     } catch (parseError) {
       console.error('Error parsing JSON:', parseError);
       res.status(500).send('Internal Server Error');

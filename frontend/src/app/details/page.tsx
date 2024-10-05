@@ -1,50 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import Record from '../admin/events.json'; // Import JSON file
-
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-const calculateTimeLeft = (): TimeLeft => {
-  const difference = +new Date('2024-11-05') - +new Date();
-  let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-  if (difference > 0) {
-    timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
-    };
-  }
-
-  return timeLeft;
-};
-
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <TimerContainer>
-      <TimeBox>{timeLeft.days || '0'}<Label>Days</Label></TimeBox>
-      <TimeBox>{timeLeft.hours || '0'}<Label>Hours</Label></TimeBox>
-      <TimeBox>{timeLeft.minutes || '0'}<Label>Minutes</Label></TimeBox>
-      <TimeBox>{timeLeft.seconds || '0'}<Label>Seconds</Label></TimeBox>
-    </TimerContainer>
-  );
-};
+import { IDKitWidget, VerificationLevel, ISuccessResult, useIDKit } from '@worldcoin/idkit';
+import { verify } from '../../component/verifyProof';
+import { useWallet } from '../../component/walletConnect';
+import { mintToken } from '../../component/contractExecution';
 
 interface DetailsPageProps {
   eventId: number;
@@ -52,6 +12,57 @@ interface DetailsPageProps {
 
 const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
   const event = Record.find(event => event.id === eventId);
+  const defaultAccount = useWallet();
+  const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`;
+  const action = process.env.NEXT_PUBLIC_WLD_ACTION;
+
+  const handleBuyTicket = () => {
+    if (!defaultAccount) {
+        alert("Please connect your wallet to buy tickets!");
+      } else {
+        try{
+          mintToken(eventId);
+        } catch (error) {
+          console.error(error);
+      }
+    }
+  }
+
+  //error handling if app_id and action is not set
+  if (!app_id) {
+    throw new Error("app_id is not set in environment variables!");
+  }
+  if (!action) {
+    throw new Error("action is not set in environment variables!");
+  }
+
+  //open the worldcoin verification when the button is clicked
+  const { setOpen } = useIDKit(); 
+
+  // This function is called when a user has been successfully verified
+  const onSuccess = (result: ISuccessResult): void => {
+    //do code here after successful verification
+    handleBuyTicket();
+    localStorage.setItem('nullifierHash', result.nullifier_hash);
+    localStorage.setItem('eventTicketPrice', event.ticketPrice);
+  };
+
+  // This function is called when a user has been successfully verified and the proof has been sent to the backend
+  const handleProof = async (result: ISuccessResult) => {
+    console.log(
+      "Proof received from IDKit, sending to backend:\n",
+      JSON.stringify(result)
+    ); // Log the proof from IDKit to the console for visibility
+
+
+    //get the proof from the backend (verify the proof)
+    const data = await verify(result);
+    if (data.success == true) { //check if the verification was success or not
+        console.log("Successful response from backend:\n", JSON.stringify(data)); // Log the response from our backend for visibility
+    } else {
+        throw new Error(`${data.detail}`); // Throw an error if the verification failed
+    }
+  };
 
   if (!event) {
     return <p>Event not found</p>;
@@ -68,7 +79,14 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
           <Description>Location: {event.eventVenue}</Description>
           <Description>Date: {event.eventDate}</Description>
           {/* <CountdownTimer eventDate={event.eventDate} /> */}
-          <BuyButton>Buy Ticket</BuyButton>
+          <IDKitWidget 
+            action={action}
+            app_id={app_id}
+            onSuccess={onSuccess}
+            handleVerify={handleProof}
+            verification_level={VerificationLevel.Device}
+          />
+          <BuyButton onClick={() => setOpen(true)}>Buy Ticket</BuyButton>
         </TextContainer>
         <ImageContainer>
           <TitleImage src={event.eventPoster} alt="Event Image" />
@@ -92,7 +110,7 @@ const HeaderImage = styled.img`
   width: 100%;
   height: auto;
   display: block;
-  opacity: 0.3;
+  opacity: 0.3; 
 `;
 
 const MainContainer = styled.div`
