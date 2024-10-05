@@ -2,8 +2,9 @@
 import styled from 'styled-components';
 import React from 'react';
 import Link from 'next/link'; // Import Link component
+import Record from '../admin/events.json'; // Import JSON file
 
-const events = [
+const staticEvents = [
   { 
     id: 1, 
     image: '/images/event1.jpg', 
@@ -28,14 +29,24 @@ const events = [
   // Add more events as needed
 ];
 
-export default function EventPage() {
+const events = [
+  ...staticEvents,
+  ...Record.map((event, index) => ({
+    id: staticEvents.length + index + 1, // Ensure unique IDs
+    image: '/images/adele.png', // Default image or map accordingly
+    title: event.eventName,
+    date: event.eventDate,
+    price: event.ticketPrice
+  }))
+];
 
+export default function EventPage() {
   return (
     <Container>
       <Title2>Upcoming Event</Title2>
       <EventList>
         {events.map(event => (
-          <Link href={{ pathname: '/details'}}>
+          <Link href={{ pathname: '/details'}} key={event.id}>
             <EventCard>
               <EventImage src={event.image} alt={`Event ${event.id}`} />
               <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
@@ -58,10 +69,10 @@ const Container = styled.div`
 `;
 
 const EventList = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap; /* Ensure all items are in one line */
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 20px; /* Space between items */
+  justify-items: center; /* Center items horizontally */
 `;
 
 const Title2 = styled.h1`
@@ -76,11 +87,9 @@ const EventCard = styled.div`
   border: 1px solid;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px;
   width: 300px;
   text-align: center;
   overflow: hidden;
-  flex-shrink: 0; /* Prevent shrinking */
   transition: transform 0.3s ease; /* Add transition */
   cursor: pointer; /* Add pointer cursor on hover */
 
