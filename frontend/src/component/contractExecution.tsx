@@ -38,10 +38,13 @@ export async function init() {
 export async function mintToken() {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
+    let exportNullifier = localStorage.getItem('nullifierHash')
+    console.log(exportNullifier); // check does nullifier hash is stored in local storage
     
     try {
         const createOccasion = contract.methods.mint(
-            "1"
+            "3",
+            exportNullifier
             ).send({ from: defaultAccount, value: EventInfo[0].cost });
         console.log(createOccasion);
     } catch (error) {

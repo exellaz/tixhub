@@ -3,9 +3,9 @@
         "organizer": "0x488fc7f3cBFAcC94C0d1e62Db5e7c97C55A5055f",
         "name": "ETHKL",
         "description": "HACKATHON",
-        "cost": "10000000000000000000",
+        "cost": "100",
         "maxTickets": "1000",
-        "ticketsPerUser": "1",
+        "ticketsPerUser": "2",
         "date": "2021-10-5",
         "time": "10:00pm",
         "location": "KLCC"
