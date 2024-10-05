@@ -37,7 +37,11 @@ app.post('/api/events', (req, res) => {
       events = JSON.parse(data);
     }
 
-    events.push(eventData);
+    // Generate a new id for the event
+    const newId = events.length > 0 ? events[events.length - 1].id + 1 : 1;
+    const newEvent = { id: newId, ...eventData };
+
+    events.push(newEvent);
 
     fs.writeFile(filePath, JSON.stringify(events, null, 2), (err) => {
       if (err) {
