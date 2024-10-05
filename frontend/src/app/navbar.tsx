@@ -5,7 +5,7 @@ import { useWallet } from '../component/walletConnect';
 import Image from 'next/image'; // Import Image component
 
 const NavBar = () => {
-  const { defaultAccount, connectWallet } = useWallet();
+  const { defaultAccount, connectWallet, disconnectWallet } = useWallet();
 
   //function shorten Address
   const shortenAddress = (address: string) => {
@@ -27,7 +27,8 @@ const NavBar = () => {
         {defaultAccount ? (
           <UserAddress>
             <Image src="/images/metamask_icon.png" alt="MetaMask Icon" width={24} height={24} />
-            {shortenAddress(defaultAccount)}
+            <TextAddress>{shortenAddress(defaultAccount)}</TextAddress>
+            <SignOutButton onClick={disconnectWallet}>Sign Out</SignOutButton>
           </UserAddress>
         ) : (
           <ConnectButton onClick={connectWallet}>Connect Wallet</ConnectButton>
@@ -37,6 +38,7 @@ const NavBar = () => {
   );
 };
 
+/////////////////////////////// STYLING ///////////////////////////////////
 const NavBarContainer = styled.nav`
   background-color: black; /* bg-gray-800 */
   padding: 1rem; /* p-4 */
@@ -78,6 +80,22 @@ const UserAddress = styled.div`
   background-color: #2e2e2e; /* bg-blue-500 */
   padding: 0.5rem 1rem; /* px-4 py-2 */
   border-radius: 0.25rem; /* rounded */
+  display: flex;
+  align-items: center;
+`;
+
+const TextAddress = styled.div`
+  margin-left: 8px;
+`;
+
+const SignOutButton = styled.button`
+  border-radius: 0.25rem; /* rounded */
+  padding: 0.2rem 0.9rem; /* px-4 py-2 */
+  margin-left: 0.5rem; /* mr-2 */
+  background-color: #404040; /* bg-blue-500 */
+  &:hover {
+    background-color: #3C3C3C; /* bg-blue-700 */
+  }
 `;
 
 export default NavBar;

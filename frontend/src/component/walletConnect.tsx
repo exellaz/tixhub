@@ -49,13 +49,18 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   };
 
+  const disconnectWallet = () => {
+    setDefaultAccount(null);
+    localStorage.removeItem('defaultAccount');
+  }
+
   const accountChangedHandler = (account: string) => {
     setDefaultAccount(account);
     localStorage.setItem('defaultAccount', account);
   };
 
   return (
-    <WalletContext.Provider value={{ defaultAccount, connectWallet }}>
+    <WalletContext.Provider value={{ defaultAccount, connectWallet, disconnectWallet }}>
       {children}
     </WalletContext.Provider>
   );
