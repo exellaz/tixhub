@@ -146,28 +146,28 @@ export default function EventPage() {
   };
 
 /////////////////////////////// STYLING ///////////////////////////////////
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 `;
 
-const EventList = styled.div`
+export const EventList = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Three columns */
   gap: 20px; /* Space between items */
   justify-items: center; /* Center items horizontally */
 `;
 
-const Title2 = styled.h1`
+export const Title2 = styled.h1`
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
 `;
 
-const EventCard = styled.div`
+export const EventCard = styled.div`
   background-color: #fff;
   border: 1px solid;
   border-radius: 8px;
@@ -183,26 +183,26 @@ const EventCard = styled.div`
   }
 `;
 
-const EventImage = styled.img`
+export const EventImage = styled.img`
   width: 100%;
   height: 200px; /* Set a fixed height */
   object-fit: cover; /* Ensure the image covers the area without distortion */
 `;
 
-const EventTitle = styled.h3`
+export const EventTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: bold;
   margin: 10px 0;
   color: #333;
 `;
 
-const EventDate = styled.p`
+export const EventDate = styled.p`
   font-size: 1rem;
   color: #555;
   margin: 5px 0;
 `;
 
-const EventPrice = styled.div`
+export const EventPrice = styled.div`
   padding: 10px;
   font-size: 1.2rem;
   font-weight: bold;
