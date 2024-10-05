@@ -9,6 +9,7 @@ interface EventFormProps {
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 	const [eventName, setEventName] = useState('');
 	const [eventDate, setEventDate] = useState('');
+	const [eventTime, setEventTime] = useState('');
 	const [eventVenue, setEventVenue] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
 	const [ticketPrice, setTicketPrice] = useState('');
@@ -20,6 +21,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 	  const eventData = {
 		eventName,
 		eventDate,
+		eventTime,
 		eventVenue,
 		eventDescription,
 		ticketPrice,
@@ -45,6 +47,12 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 		  type='date'
 		  value={eventDate}
 		  onChange={(e) => setEventDate(e.target.value)}
+		/>
+		<p>Time:</p>
+		<Input
+		  type='time'
+		  value={eventTime}
+		  onChange={(e) => setEventTime(e.target.value)}
 		/>
 		<p>Venue:</p>
 		<Input

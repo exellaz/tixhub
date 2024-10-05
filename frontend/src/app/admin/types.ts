@@ -1,6 +1,7 @@
 export interface EventData {
   eventName: string;
   eventDate: string;
+  eventTime: string;
   eventVenue: string;
   eventDescription: string;
   ticketPrice: string;
