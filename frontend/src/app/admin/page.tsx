@@ -3,6 +3,9 @@
 import React from 'react'
 import EventForm from './EventForm'
 import { EventData } from './types'
+import { createEvent } from '@/component/contractExecution'
+import { setMaxIdleHTTPParsers } from 'http'
+import { resolve } from 'path'
 
 export const CreateEventPage = () => {
 
@@ -23,10 +26,11 @@ export const CreateEventPage = () => {
                 throw new Error('Network response was not ok');
             }
 
-            const result = await response.text();
+            const result = await response.json();
             console.log(result);
+			createEvent(result)
         } catch (error) {
-            console.error('Error:', error);
+			console.error('Error:', error);
         }
     }
 

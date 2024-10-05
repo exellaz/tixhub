@@ -12,22 +12,24 @@ declare global {
 const web3 = new Web3(window.ethereum);
 const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
-export async function createEvent() {
+export async function createEvent(newEnt: any) {
+	console.log(newEnt)
     const account = await web3.eth.getAccounts();
-    const defaultAccount = localStorage.getItem('eventData');
+	const defaultAccount = account[0]
 
     try {
-        const event = EventInfo[0];
+        const event = newEnt;
+		console.log(event)
         const createOccasion = contract.methods.createOccasion(
-            event.organiserAddress,
-            event.eventName,
-            event.eventDescription,
-            event.ticketPrice,
-            event.ticketAmount,
-            event.ticketsPerAccount,
-            event.eventDate,
-            event.eventTime,
-            event.eventVenue,
+			event.organiserAddress,
+			event.eventName,
+			event.eventDescription,
+			event.ticketPrice,
+			event.ticketAmount,
+			event.ticketsPerAccount,
+			event.eventDate,
+			event.eventTime,
+			event.eventVenue
             ).send({ from: defaultAccount });
         console.log(createOccasion);
     } catch (error) {
