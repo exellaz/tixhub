@@ -24,6 +24,7 @@ contract TixHub is ERC721 {
 		uint256 id;
 		address organizer;
 		string  name;
+		string description;
 		uint256 cost;
 		uint256 ticketsLeft;
 		uint256 maxTickets;
@@ -41,6 +42,7 @@ contract TixHub is ERC721 {
 	function createOccasion(
 		address _organizer,
 		string memory _name,
+		string memory _description,
 		uint256 _cost,
 		uint256 _maxTickets,
 		uint256 _ticketsPerUser,
@@ -53,6 +55,7 @@ contract TixHub is ERC721 {
 			totalOccasions,
 			_organizer,
 			_name,
+			_description,
 			_cost,
 			_maxTickets,
 			_maxTickets,
