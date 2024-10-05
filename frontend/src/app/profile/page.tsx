@@ -7,7 +7,13 @@ import { CONTRACT_ADDRESS } from '@/component/contractAddress';
 import { comment } from 'postcss';
 import ABI from '../../component/ABI.json'
 
-const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545')
+declare global {
+    interface Window {
+        ethereum: any;
+    }
+}
+
+const web3 = new Web3(window.ethereum);
 const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS)
 
 export default function ProfilePage() {
@@ -25,8 +31,10 @@ export default function ProfilePage() {
 
 async function callSmartContractFunction() {
 	try {
+	web3.eth.getAccounts().then(console.log)
 	  const accounts = await web3.eth.getAccounts();
 	  const defaultAccount = accounts[0]
+	  console.log(defaultAccount)
 	  const result = await contract.methods.getTokensOfUser(defaultAccount).call({ from: accounts[0] });
 	  console.log('Profile Result:', result);
 	} catch (error) {
