@@ -64,6 +64,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <WorldTourSign>WORLD TOUR</WorldTourSign>
               <Title>Taylor Swift The <PinkColor>Era Tour</PinkColor></Title>
               <Description>Don't miss the chance, get your ticket now!</Description>
+              <Description>Location : National Stadium Bukit Jalil</Description>
               <CountdownTimer />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
@@ -81,6 +82,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <WorldTourSign>WORLD TOUR</WorldTourSign>
               <Title>Cold Play <PinkColor>Era Tour</PinkColor></Title>
               <Description>Don't miss the chance, get your ticket now!</Description>
+              <Description>Location : Arena of Stars, Genting Highlands</Description>
               <CountdownTimer />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
@@ -98,6 +100,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <WorldTourSign>WORLD TOUR</WorldTourSign>
               <Title>Bruno Mars <PinkColor>Era Tour</PinkColor></Title>
               <Description>Don't miss the chance, get your ticket now!</Description>
+              <Description>Location : Axiata Arena Bukit Jalil</Description>
               <CountdownTimer />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
