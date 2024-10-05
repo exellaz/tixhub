@@ -50,8 +50,8 @@ export default function ProfilePage() {
   return (
 	<Container>
 		<EventList>
-		{tickets.map(event => (
-			<Link key={event.id} href={{ pathname: '/details'}}>
+		{tickets.map((event, index) => (
+			<Link key={event.id || index} href={{ pathname: '/details'}}>
 			  <EventCard>
 				<EventImage src={event.image} alt={`Event ${event.id}`} />
 				<EventTitle>{event.title}</EventTitle>  {/* Displays title */}
