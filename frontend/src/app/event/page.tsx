@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import React from 'react';
 import Link from 'next/link'; // Import Link component
 import { useWallet } from '../../component/walletConnect';
-import init from '../../component/contractExecution';
-import mintToken from '../../component/contractExecution';
+import { init } from '../../component/contractExecution';
+import { mintToken } from '../../component/contractExecution';
 
 const events = [
   { 

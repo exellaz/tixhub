@@ -32,7 +32,7 @@ export async function init() {
     }
 };
 
-export default async function mintToken() {
+export async function mintToken() {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
     
