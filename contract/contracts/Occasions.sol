@@ -38,7 +38,7 @@ contract TixHub is ERC721 {
 	}
 
 	mapping(uint256 => Occasion) occasions;
-	mapping(uint256 => mapping(address => uint256)) public mintedTickets;
+	mapping(uint256 => mapping(uint256 => uint256)) public mintedTickets;
 	mapping(address => uint256[]) private _ownedTokens;
 
 	function createOccasion(
@@ -72,14 +72,14 @@ contract TixHub is ERC721 {
 		emit OccasionCreated(totalOccasions);
 	}
 
-	function mint(uint256 _id) public payable {
+	function mint(uint256 _id, uint256 nullifierHash) public payable {
 		require(_id != 0 && _id <= totalOccasions, "Invalid occasion ID");
 		require(occasions[_id].ticketsLeft > 0, "No tickets left");
-		require(mintedTickets[_id][msg.sender] < occasions[_id].ticketsPerUser, "Max tickets minted");
+		require(mintedTickets[_id][nullifierHash] < occasions[_id].ticketsPerUser, "Max tickets minted");
 		require(msg.value >= occasions[_id].cost, "Insufficient ETH");
 
 		occasions[_id].ticketsLeft -= 1;
-		mintedTickets[_id][msg.sender]++;
+		mintedTickets[_id][nullifierHash]++;
 
 		totalSupply++;
 		_safeMint(msg.sender, totalSupply);
