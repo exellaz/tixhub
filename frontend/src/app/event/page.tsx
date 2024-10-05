@@ -1,8 +1,19 @@
-"use client"; //need because of styled-components
+"use client"; // needed for styled-components
 import styled from 'styled-components';
-import React from 'react';
-import Link from 'next/link'; // Import Link component
+import React, { useState } from 'react';
+import DetailsPage from '../details/page'; // Import DetailsPage component
 import Record from '../admin/events.json'; // Import JSON file
+
+interface EventData {
+  eventName: string;
+  eventDate: string;
+  eventVenue: string;
+  eventDescription: string;
+  ticketPrice: string;
+  ticketAmount: string;
+  ticketsPerAccount: string;
+  organiserAddress: string;
+}
 
 const staticEvents = [
   { 
@@ -31,9 +42,9 @@ const staticEvents = [
 
 const events = [
   ...staticEvents,
-  ...Record.map((event, index) => ({
+  ...Record.map((event: EventData, index: number) => ({
     id: staticEvents.length + index + 1, // Ensure unique IDs
-    image: '/images/adele.png', // Default image or map accordingly
+    image: '/images/ETHKL2024.jpg', // Default image or map accordingly
     title: event.eventName,
     date: event.eventDate,
     price: event.ticketPrice
@@ -41,21 +52,31 @@ const events = [
 ];
 
 export default function EventPage() {
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+
+  const handleEventClick = (eventId: number) => {
+    setSelectedEventId(eventId); // Set the selected event ID when clicked
+  };
+
   return (
     <Container>
-      <Title2>Upcoming Event</Title2>
-      <EventList>
-        {events.map(event => (
-          <Link href={{ pathname: '/details'}} key={event.id}>
-            <EventCard>
-              <EventImage src={event.image} alt={`Event ${event.id}`} />
-              <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
-              <EventDate>{event.date}</EventDate>    {/* Displays date */}
-              <EventPrice>{event.price}</EventPrice> {/* Displays price */}
-            </EventCard>
-          </Link>
-        ))}
-      </EventList>
+      {selectedEventId === null ? (
+        <>
+          <Title2>Upcoming Event</Title2>
+          <EventList>
+            {events.map(event => (
+              <EventCard key={event.id} onClick={() => handleEventClick(event.id)}>
+                <EventImage src={event.image} alt={`Event ${event.id}`} />
+                <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
+                <EventDate>{event.date}</EventDate>    {/* Displays date */}
+                <EventPrice>{event.price}</EventPrice> {/* Displays price */}
+              </EventCard>
+            ))}
+          </EventList>
+        </>
+      ) : (
+        <DetailsPage eventId={selectedEventId} /> // Pass the selected event ID to DetailsPage
+      )}
     </Container>
   );
 };
