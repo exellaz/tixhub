@@ -20,6 +20,12 @@ app.post('/api/events', (req, res) => {
 
   const filePath = path.join(__dirname, 'events.json');
 
+  // Check if the file exists
+  if (!fs.existsSync(filePath)) {
+    // Create the file with an empty array if it doesn't exist
+    fs.writeFileSync(filePath, JSON.stringify([]));
+  }
+
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading file:', err);
