@@ -15,16 +15,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Event API');
 });
 
-app.post('/api/events', (req, res) => {
-  const eventData = req.body;
-
+// Endpoint to fetch events
+app.get('/api/events', (req, res) => {
   const filePath = path.join(__dirname, 'events.json');
-
-  // Check if the file exists
-  if (!fs.existsSync(filePath)) {
-    // Create the file with an empty array if it doesn't exist
-    fs.writeFileSync(filePath, JSON.stringify([]));
-  }
 
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
@@ -32,25 +25,13 @@ app.post('/api/events', (req, res) => {
       return res.status(500).send('Internal Server Error');
     }
 
-    let events = [];
-    if (data) {
-      events = JSON.parse(data);
+    try {
+      const events = JSON.parse(data);
+      res.status(200).json(events);
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);
+      res.status(500).send('Internal Server Error');
     }
-
-    // Generate a new id for the event
-    const newId = events.length > 0 ? events[events.length - 1].id + 1 : 1;
-    const newEvent = { id: newId, ...eventData };
-
-    events.push(newEvent);
-
-    fs.writeFile(filePath, JSON.stringify(events, null, 2), (err) => {
-      if (err) {
-        console.error('Error writing file:', err);
-        return res.status(500).send('Internal Server Error');
-      }
-
-      res.status(200).send('Event data saved successfully');
-    });
   });
 });
 
