@@ -1,7 +1,7 @@
 import { CONTRACT_ADDRESS } from './contractAddress';
 import { Web3 } from 'web3';
 import ABI from './ABI.json';
-import { create } from 'domain';
+import EventInfo from '../app/event/eventInfo.json';
 
 declare global {
     interface Window {
@@ -17,15 +17,18 @@ export async function init() {
     const defaultAccount = account[0];
     
     try {
+        const event = EventInfo[0];
         const createOccasion = contract.methods.createOccasion(
-            "0x4dd1EE2aA4272f418d5f5dd9f92868852BADA733", 
-            "Event Title",
-            "100", 
-            "100", 
-            "1",
-            "12/12/2022", 
-            "Event Time", 
-            "Event location").send({ from: defaultAccount });
+            event.organizer,
+            event.name,
+            event.description,
+            event.cost,
+            event.maxTickets,
+            event.ticketsPerUser,
+            event.date,
+            event.time,
+            event.location,
+            ).send({ from: defaultAccount });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);
@@ -39,7 +42,7 @@ export async function mintToken() {
     try {
         const createOccasion = contract.methods.mint(
             "1"
-            ).send({ from: defaultAccount, value: web3.utils.toWei("0.0000000000000001", "ether") });
+            ).send({ from: defaultAccount, value: EventInfo[0].cost });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);
