@@ -1,7 +1,7 @@
 import { CONTRACT_ADDRESS } from './contractAddress';
 import { Web3 } from 'web3';
 import ABI from './ABI.json';
-import { create } from 'domain';
+import EventInfo from '../app/admin/events.json';
 
 declare global {
     interface Window {
@@ -17,15 +17,18 @@ export async function init() {
     const defaultAccount = account[0];
 
     try {
+        const event = EventInfo[0];
         const createOccasion = contract.methods.createOccasion(
-            "0x4dd1EE2aA4272f418d5f5dd9f92868852BADA733",
-            "Event Title",
-            "100",
-            "100",
-            "10",
-            "12/12/2022",
-            "Event Time",
-            "Event location").send({ from: defaultAccount });
+            event.eventName,
+            event.eventDate,
+            event.eventTime,
+            event.eventVenue,
+            event.eventDescription,
+            event.ticketPrice,
+            event.ticketAmount,
+            event.ticketsPerAccount,
+            event.organiserAddress,
+            ).send({ from: defaultAccount });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);
@@ -36,10 +39,14 @@ export async function mintToken() {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
 
+    let exportNullifier = localStorage.getItem('nullifierHash')
+    console.log(exportNullifier); // check does nullifier hash is stored in local storage
+
     try {
         const createOccasion = contract.methods.mint(
-            "2"
-            ).send({ from: defaultAccount, value: web3.utils.toWei("0.0000000000000001", "ether") });
+            "3",
+            exportNullifier
+            ).send({ from: defaultAccount, value: EventInfo[0].ticketPrice });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);
