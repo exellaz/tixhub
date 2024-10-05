@@ -38,7 +38,7 @@ export async function mintToken() {
     
     try {
         const createOccasion = contract.methods.mint(
-            "100"
+            "1"
             ).send({ from: defaultAccount, value: web3.utils.toWei("0.0000000000000001", "ether") });
         console.log(createOccasion);
     } catch (error) {
