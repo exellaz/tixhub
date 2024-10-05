@@ -19,7 +19,8 @@ const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS)
 export default function ProfilePage() {
 	// TODO
 	// retrieve user tickets info
-	callSmartContractFunction()
+	const tickets = fetchUserTickets()
+	console.log('Tickets', tickets)
 	// render each ticket as a card
 	// when the card is clicked, prompt the user to sell
     return (
@@ -29,14 +30,11 @@ export default function ProfilePage() {
     );
 }
 
-async function callSmartContractFunction() {
+async function fetchUserTickets() {
 	try {
-	web3.eth.getAccounts().then(console.log)
 	  const accounts = await web3.eth.getAccounts();
 	  const defaultAccount = accounts[0]
-	  console.log(defaultAccount)
 	  const result = await contract.methods.getTokensOfUser(defaultAccount).call({ from: accounts[0] });
-	  console.log('Profile Result:', result);
 	} catch (error) {
 	  console.error('Error calling smart contract function:', error);
 	}
