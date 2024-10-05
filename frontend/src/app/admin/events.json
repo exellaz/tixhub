@@ -4,12 +4,13 @@
     "eventName": "Taylor Swift | The Era Tour",
     "eventDate": "2024-11-05",
     "eventTime": "",
-    "eventVenue": "",
+    "eventVenue": "National Stadium Bukit Jalil",
     "eventDescription": "",
     "ticketPrice": "1 ETH",
     "ticketAmount": "",
     "ticketsPerAccount": "",
-    "organiserAddress": ""
+    "organiserAddress": "",
+    "eventPoster": "images/event1.jpg"
   },
   {
     "id": 2,
@@ -17,55 +18,36 @@
     "eventDate": "2024 - 12 - 11",
     "eventTime": "",
     "eventVenue": "",
-    "eventDescription": "",
+    "eventDescription": "Axiata Areana Bukit Jalil",
     "ticketPrice": "1 ETH",
     "ticketAmount": "",
     "ticketsPerAccount": "",
-    "organiserAddress": ""
+    "organiserAddress": "",
+    "eventPoster": "images/event2.jpg"
   },
   {
     "id": 3,
     "eventName": "Bruno Mars 24K Magic Tour",
     "eventDate": "2025-01-03",
     "eventTime": "",
-    "eventVenue": "",
+    "eventVenue": "Arena of Stars Genting",
     "eventDescription": "",
     "ticketPrice": "1 ETH",
     "ticketAmount": "",
     "ticketsPerAccount": "",
-    "organiserAddress": ""
+    "organiserAddress": "",
+    "eventPoster": "images/event3.jpg"
   },
   {
     "id": 4,
-    "eventName": "eth",
-    "eventDate": "2024 - 12 - 12",
-    "eventVenue": "klcc",
-    "eventDescription": "",
-    "ticketPrice": "2 ETH",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": ""
-  },
-  {
-    "eventName": "test",
-    "eventDate": "",
-    "eventVenue": "",
-    "eventDescription": "",
-    "ticketPrice": "",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": "",
-    "id": 5
-  },
-  {
-    "eventName": "test1",
-    "eventDate": "",
-    "eventVenue": "",
-    "eventDescription": "",
-    "ticketPrice": "",
-    "ticketAmount": "",
-    "ticketsPerAccount": "",
-    "organiserAddress": "",
-    "id": 6
+    "eventName": "ethkl",
+    "eventDate": "2024-10-09",
+    "eventVenue": "234",
+    "eventDescription": "123",
+    "ticketPrice": "1 ETH",
+    "ticketAmount": "3",
+    "ticketsPerAccount": "23",
+    "organiserAddress": "123",
+    "eventPoster": "blob:http://localhost:3000/1427b841-feea-4806-a311-8aaa99816e82"
   }
 ]

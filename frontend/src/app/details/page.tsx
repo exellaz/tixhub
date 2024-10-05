@@ -1,122 +1,21 @@
-"use client";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Record from '../admin/events.json'; // Import JSON file
-
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-const calculateTimeLeft = (): TimeLeft => {
-  const difference = +new Date('2024-11-05') - +new Date();
-  let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-  if (difference > 0) {
-    timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
-    };
-  }
-
-  return timeLeft;
-};
-
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <TimerContainer>
-      <TimeBox>{timeLeft.days || '0'}<Label>Days</Label></TimeBox>
-      <TimeBox>{timeLeft.hours || '0'}<Label>Hours</Label></TimeBox>
-      <TimeBox>{timeLeft.minutes || '0'}<Label>Minutes</Label></TimeBox>
-      <TimeBox>{timeLeft.seconds || '0'}<Label>Seconds</Label></TimeBox>
-    </TimerContainer>
-  );
-};
 
 interface DetailsPageProps {
   eventId: number;
 }
 
 const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
-  const eventIdNumber = parseInt(eventId as unknown as string, 10);
   const event = Record.find(event => event.id === eventId);
+
+  if (!event) {
+    return <p>Event not found</p>;
+  }
 
   return (
     <PageBackground>
-      {eventIdNumber === 1 && (
-        <>
-          <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
-          <MainContainer>
-            <TextContainer>
-              <WorldTourSign>WORLD TOUR</WorldTourSign>
-              <Title>Taylor Swift The <PinkColor>Era Tour</PinkColor></Title>
-              <Description>Don't miss the chance, get your ticket now!</Description>
-              <Description>Location : National Stadium Bukit Jalil</Description>
-              <Description>Date : 2024 - 11 - 05</Description>
-              <CountdownTimer />
-              <BuyButton>Buy Ticket</BuyButton>
-            </TextContainer>
-            <ImageContainer>
-              <TitleImage src="/images/event1.jpg" alt="Taylor Swift Image" />
-            </ImageContainer>
-          </MainContainer>
-        </>
-      )}
-      {eventIdNumber === 2 && (
-        <>
-          <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
-          <MainContainer>
-            <TextContainer>
-              <WorldTourSign>WORLD TOUR</WorldTourSign>
-              <Title>Cold Play <PinkColor>Summer Tour</PinkColor></Title>
-              <Description>Don't miss the chance, get your ticket now!</Description>
-              <Description>Location : Arena of Stars Genting Highland</Description>
-              <Description>Date : 2024 - 12 - 11</Description>
-              <CountdownTimer />
-              <BuyButton>Buy Ticket</BuyButton>
-            </TextContainer>
-            <ImageContainer>
-              <TitleImage src="/images/event2.jpg" alt="Cold Play Image" />
-            </ImageContainer>
-          </MainContainer>
-        </>
-      )}
-      {eventIdNumber === 3 && (
-        <>
-          <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
-          <MainContainer>
-            <TextContainer>
-              <WorldTourSign>WORLD TOUR</WorldTourSign>
-              <Title>Bruno Mars <PinkColor>24K  Tour</PinkColor></Title>
-              <Description>Don't miss the chance, get your ticket now!</Description>
-              <Description>Location : Axiata Arena Bukit Jalil</Description>
-              <Description>Date : 2025 - 01 - 03</Description>
-              <CountdownTimer />
-              <BuyButton>Buy Ticket</BuyButton>
-            </TextContainer>
-            <ImageContainer>
-              <TitleImage src="/images/event3.jpg" alt="Bruno Mars Image" />
-            </ImageContainer>
-          </MainContainer>
-        </>
-      )}
-      {eventIdNumber > 3 && (
-        <>
-               <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
+      <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
       <MainContainer>
         <TextContainer>
           <WorldTourSign>WORLD TOUR</WorldTourSign>
@@ -124,17 +23,13 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
           <Description>Don't miss the chance, get your ticket now!</Description>
           <Description>Location: {event.eventVenue}</Description>
           <Description>Date: {event.eventDate}</Description>
-          <CountdownTimer eventDate={event.eventDate} />
+          {/* <CountdownTimer eventDate={event.eventDate} /> */}
           <BuyButton>Buy Ticket</BuyButton>
         </TextContainer>
         <ImageContainer>
-          <TitleImage src="/images/ETHKL2024.jpg" alt="Event Image" />
+          <TitleImage src={event.eventPoster} alt="Event Image" />
         </ImageContainer>
       </MainContainer>
-        </>
-      )}
-
-      {!eventIdNumber && <div>Event not found</div>}
     </PageBackground>
   );
 };
@@ -195,10 +90,6 @@ const WorldTourSign = styled.div`
 const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-`;
-
-const PinkColor = styled.span`
-  color: blue;
 `;
 
 const BuyButton = styled.button`

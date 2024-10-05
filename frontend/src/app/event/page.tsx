@@ -1,10 +1,12 @@
-"use client"; // needed for styled-components
-import styled from 'styled-components';
+"use client";
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import EventForm from '../admin/EventForm'; // Import EventForm component
 import DetailsPage from '../details/page'; // Import DetailsPage component
 import Record from '../admin/events.json'; // Import JSON file
 
 interface EventData {
+  id: number;
   eventName: string;
   eventDate: string;
   eventVenue: string;
@@ -13,24 +15,35 @@ interface EventData {
   ticketAmount: string;
   ticketsPerAccount: string;
   organiserAddress: string;
+  eventPoster: string;
 }
 
-const events = [
-  ...Record.map((event: EventData, index: number) => ({
-    id: index + 1, // Ensure unique IDs
-    image: '/images/ETHKL2024.jpg', // Default image or map accordingly
-    title: event.eventName,
-    date: event.eventDate,
-    location: event.eventVenue,
-    price: event.ticketPrice
-  }))
-];
+const events: EventData[] = Record;
 
-export default function EventPage() {
+const EventPage: React.FC = () => {
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
 
   const handleEventClick = (eventId: number) => {
     setSelectedEventId(eventId); // Set the selected event ID when clicked
+  };
+
+  const handleFormSubmit = async (formData: FormData) => {
+    try {
+      const response = await fetch('/api/events', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create event');
+      }
+
+      const newEvent = await response.json();
+      console.log('Event created:', newEvent);
+      // Optionally, update the local state or refetch the events list
+    } catch (error) {
+      console.error('Error creating event:', error);
+    }
   };
 
   return (
@@ -41,10 +54,10 @@ export default function EventPage() {
           <EventList>
             {events.map(event => (
               <EventCard key={event.id} onClick={() => handleEventClick(event.id)}>
-                <EventImage src={event.image} alt={`Event ${event.id}`} />
-                <EventTitle>{event.title}</EventTitle>  {/* Displays title */}
-                <EventDate>{event.date}</EventDate>    {/* Displays date */}
-                <EventPrice>{event.price}</EventPrice> {/* Displays price */}
+                <EventImage src={event.eventPoster} alt={`Event ${event.id}`} />
+                <EventTitle>{event.eventName}</EventTitle>  {/* Displays title */}
+                <EventDate>{event.eventDate}</EventDate>    {/* Displays date */}
+                <EventPrice>{event.ticketPrice}</EventPrice> {/* Displays price */}
               </EventCard>
             ))}
           </EventList>
@@ -55,6 +68,8 @@ export default function EventPage() {
     </Container>
   );
 };
+
+export default EventPage;
 
 /////////////////////////////// STYLING ///////////////////////////////////
 const Container = styled.div`
