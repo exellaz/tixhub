@@ -16,112 +16,123 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 	const [ticketAmount, setTicketAmount] = useState('');
 	const [ticketsPerAccount, setTicketsPerAccount] = useState('');
 	const [organiserAddress, setOrganiserAddress] = useState('');
+  const [eventPoster, setEventPoster] = useState<File | null>(null);
+  const [step, setStep] = useState(1);
 
-	const handleSubmit = () => {
-	  const eventData = {
+  const handleNext = () => {
+    setStep(2);
+  };
+
+	const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+	  const newEvent = {
 		eventName,
 		eventDate,
 		eventTime,
 		eventVenue,
 		eventDescription,
-		ticketPrice,
+		ticketPrice: `${ticketPrice} ETH`,
 		ticketAmount,
 		ticketsPerAccount,
 		organiserAddress,
+      eventPoster: eventPoster ? URL.createObjectURL(eventPoster) : ''
 	  };
-	  onSubmit(eventData);
-	  alert('Successfully created event'); // Show pop-up alert message
+
+	  onSubmit(newEvent);
+	  alert('Successfully created event');
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setEventPoster(e.target.files[0]);
+    }
 	};
 
-	return (
-	  <CenteredContainer>
-		<h1>New Event</h1>
-		<p>Event Name:</p>
-		<Input
-		  type='text'
-		  placeholder='Enter event name'
-		  value={eventName}
-		  onChange={(e) => setEventName(e.target.value)}
-		/>
-		<p>Date:</p>
-		<Input
-		  type='date'
-		  value={eventDate}
-		  onChange={(e) => setEventDate(e.target.value)}
-		/>
-		<p>Time:</p>
-		<Input
-		  type='time'
-		  value={eventTime}
-		  onChange={(e) => setEventTime(e.target.value)}
-		/>
-		<p>Venue:</p>
-		<Input
-		  type='text'
-		  placeholder='Enter event venue'
-		  value={eventVenue}
-		  onChange={(e) => setEventVenue(e.target.value)}
-		/>
-		<p>Description:</p>
-		<Input
-		  type='text'
-		  placeholder='Enter event description'
-		  value={eventDescription}
-		  onChange={(e) => setEventDescription(e.target.value)}
-		/>
-		<p>Price</p>
-		<Input
-		  type='number'
-		  placeholder='Enter ticket price'
-		  value={ticketPrice}
-		  onChange={(e) => setTicketPrice(e.target.value)}
-		/>
-		<p>Ticket amount</p>
-		<Input
-		  type='number'
-		  placeholder='Enter ticket amount'
-		  value={ticketAmount}
-		  onChange={(e) => setTicketAmount(e.target.value)}
-		/>
-		<p>Tickets per account:</p>
-		<Input
-		  type='number'
-		  placeholder='Enter tickets per account'
-		  value={ticketsPerAccount}
-		  onChange={(e) => setTicketsPerAccount(e.target.value)}
-		/>
-		<p>Organiser Address:</p>
-		<Input
-		  type='text'
-		  placeholder='Enter organiser address'
-		  value={organiserAddress}
-		  onChange={(e) => setOrganiserAddress(e.target.value)}
-		/>
-		<Button onClick={handleSubmit}>Create Event</Button>
-	  </CenteredContainer>
-	);
-  };
+  return (
+    <PageContainer>
+      <CenteredContainer>
+        <FormContainer onSubmit={handleSubmit}>
+          {step === 1 && (
+            <>
+              <Label>Event Name</Label>
+              <Input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} />
+              <Label>Event Date</Label>
+              <Input type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+              <Label>Event Venue</Label>
+              <Input type="text" value={eventVenue} onChange={(e) => setEventVenue(e.target.value)} />
+              <Label>Event Description</Label>
+              <Input type="text" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} />
+              <Button type="button" onClick={handleNext}>Next</Button>
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <Label>Ticket Price</Label>
+              <Input type="text" value={ticketPrice} onChange={(e) => setTicketPrice(e.target.value)} />
+              <Label>Ticket Amount</Label>
+              <Input type="number" value={ticketAmount} onChange={(e) => setTicketAmount(e.target.value)} />
+              <Label>Tickets Per Account</Label>
+              <Input type="number" value={ticketsPerAccount} onChange={(e) => setTicketsPerAccount(e.target.value)} />
+              <Label>Organiser Address</Label>
+              <Input type="text" value={organiserAddress} onChange={(e) => setOrganiserAddress(e.target.value)} />
+              <Label>Event Poster</Label>
+              <Input type="file" onChange={handleFileChange} />
+              <Button type="submit">Create Event</Button>
+            </>
+          )}
+        </FormContainer>
+      </CenteredContainer>
+    </PageContainer>
+  );
+};
 
 export default EventForm;
 
 /////////////////////////////// STYLING ///////////////////////////////////
+const PageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('/path/to/your/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+`;
+
 const CenteredContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+`;
+
+const FormContainer = styled.form`
+  background: rgba(255, 255, 255, 0.5); /* White background with 50% transparency */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  color: black; /* Changed text color to black for better readability */
+`;
+
+const Label = styled.p`
+  margin: 10px 0 5px;
+  font-size: 1rem;
+  font-weight: bold;
 `;
 
 const Input = styled.input`
   display: block;
-  margin-bottom: 10px;
-  padding: 8px;
+  margin-bottom: 15px;
+  padding: 10px;
   font-size: 16px;
   width: 100%;
-  max-width: 400px;
-  color: blue;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 `;
 
 const Button = styled.button`
@@ -133,6 +144,7 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  width: 100%;
 
   &:hover {
     background-color: #005bb5;

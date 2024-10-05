@@ -3,6 +3,7 @@
 import React from 'react'
 import EventForm from './EventForm'
 import { EventData } from './types'
+import { createEvent } from '../../component/contractExecution'
 
 export const CreateEventPage = () => {
 
@@ -25,6 +26,7 @@ export const CreateEventPage = () => {
 
             const result = await response.text();
             console.log(result);
+            createEvent(result);
         } catch (error) {
             console.error('Error:', error);
         }

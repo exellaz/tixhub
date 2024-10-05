@@ -12,12 +12,12 @@ declare global {
 const web3 = new Web3(window.ethereum);
 const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
-export async function init() {
+export async function createEvent(newEvent: any) {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
 
     try {
-        const event = EventInfo[0];
+        const event = newEvent;
         const createOccasion = contract.methods.createOccasion(
             event.eventName,
             event.eventDate,
