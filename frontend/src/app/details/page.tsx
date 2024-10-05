@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Record from '../admin/events.json'; // Import JSON file
+import CountdownTimer from './CountdownTimer';
 
 interface TimeLeft {
   days: number;
@@ -26,27 +27,6 @@ const calculateTimeLeft = (): TimeLeft => {
   return timeLeft;
 };
 
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <TimerContainer>
-      <TimeBox>{timeLeft.days || '0'}<Label>Days</Label></TimeBox>
-      <TimeBox>{timeLeft.hours || '0'}<Label>Hours</Label></TimeBox>
-      <TimeBox>{timeLeft.minutes || '0'}<Label>Minutes</Label></TimeBox>
-      <TimeBox>{timeLeft.seconds || '0'}<Label>Seconds</Label></TimeBox>
-    </TimerContainer>
-  );
-};
-
 interface DetailsPageProps {
   eventId: number;
 }
@@ -67,7 +47,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <Description>Don't miss the chance, get your ticket now!</Description>
               <Description>Location : National Stadium Bukit Jalil</Description>
               <Description>Date : 2024 - 11 - 05</Description>
-              <CountdownTimer />
+              <CountdownTimer eventDate='2024-11-05' />
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
             <ImageContainer>
@@ -86,7 +66,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <Description>Don't miss the chance, get your ticket now!</Description>
               <Description>Location : Arena of Stars Genting Highland</Description>
               <Description>Date : 2024 - 12 - 11</Description>
-              <CountdownTimer />
+              <CountdownTimer eventDate='2024-12-11'/>
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
             <ImageContainer>
@@ -105,7 +85,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
               <Description>Don't miss the chance, get your ticket now!</Description>
               <Description>Location : Axiata Arena Bukit Jalil</Description>
               <Description>Date : 2025 - 01 - 03</Description>
-              <CountdownTimer />
+              <CountdownTimer eventDate='2025-01-03'/>
               <BuyButton>Buy Ticket</BuyButton>
             </TextContainer>
             <ImageContainer>
@@ -114,7 +94,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
           </MainContainer>
         </>
       )}
-      {eventIdNumber > 3 && (
+      {eventIdNumber > 3 && event &&(
         <>
                <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
       <MainContainer>
@@ -153,7 +133,7 @@ const HeaderImage = styled.img`
   width: 100%;
   height: auto;
   display: block;
-  opacity: 0.3; 
+  opacity: 0.3;
 `;
 
 const MainContainer = styled.div`
