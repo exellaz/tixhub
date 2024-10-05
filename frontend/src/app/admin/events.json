@@ -54,5 +54,17 @@
     "ticketsPerAccount": "",
     "organiserAddress": "",
     "id": 6
+  },
+  {
+    "eventName": "AAA",
+    "eventDate": "2024-10-04",
+    "eventTime": "09:33",
+    "eventVenue": "a",
+    "eventDescription": "a",
+    "ticketPrice": "10",
+    "ticketAmount": "2",
+    "ticketsPerAccount": "2",
+    "organiserAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "id": 7
   }
 ]
