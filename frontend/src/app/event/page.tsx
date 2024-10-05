@@ -101,13 +101,12 @@ export default function EventPage() {
    //open the worldcoin verification when the button is clicked
    const { setOpen } = useIDKit();
 
-   // This function is called when a user has been successfully verified
-   const onSuccess = (result: ISuccessResult): void => {
-	 //do code here after successful verification
-	 // setSuccess(true);
-	 handleMintToken();
-	 console.log(JSON.stringify(result, null, 2));
-   };
+ // This function is called when a user has been successfully verified
+ const onSuccess = (result: ISuccessResult): void => {
+   //do code here after successful verification
+   handleMintToken();
+   localStorage.setItem('nullifierHash', result.nullifier_hash);
+  };
 
    // This function is called when a user has been successfully verified and the proof has been sent to the backend
    const handleProof = async (result: ISuccessResult) => {
