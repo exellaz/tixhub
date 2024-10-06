@@ -5,10 +5,22 @@
     "eventTime": "07:00",
     "eventVenue": "kl",
     "eventDescription": "kl",
-    "ticketPrice": "1",
+    "ticketPrice": "1 ETH",
     "ticketAmount": "100",
     "ticketsPerAccount": "2",
     "organiserAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
     "id": 1
+  },
+  {
+    "eventName": "2",
+    "eventDate": "",
+    "eventTime": "",
+    "eventVenue": "",
+    "eventDescription": "",
+    "ticketPrice": "1 ETH",
+    "ticketAmount": "",
+    "ticketsPerAccount": "",
+    "organiserAddress": "",
+    "id": 2
   }
 ]

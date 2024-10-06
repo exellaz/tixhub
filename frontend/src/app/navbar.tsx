@@ -36,7 +36,7 @@ const NavBar = () => {
   return (
     <NavBarContainer>
       <NavBarContent>
-        <Branding>TicketPlatform</Branding>
+        <Branding>TixHub</Branding>
         <NavLinks>
           <NavLink href="/">Home</NavLink>
           <NavLink href="/event">Event</NavLink>

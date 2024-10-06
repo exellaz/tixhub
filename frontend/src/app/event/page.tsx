@@ -19,6 +19,7 @@ interface EventData {
 }
 
 const events: EventData[] = Record;
+const defaultImage = 'images/default.jpg'; 
 
 const EventPage: React.FC = () => {
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
@@ -54,7 +55,9 @@ const EventPage: React.FC = () => {
           <EventList>
             {events.map(event => (
               <EventCard key={event.id} onClick={() => handleEventClick(event.id)}>
-                <EventImage src={event.eventPoster} alt={`Event ${event.id}`} />
+                <EventImage
+                  src={event.eventPoster ? event.eventPoster : defaultImage}
+                  alt={`Event ${event.id}`} />
                 <EventTitle>{event.eventName}</EventTitle>  {/* Displays title */}
                 <EventDate>{event.eventDate}</EventDate>    {/* Displays date */}
                 <EventPrice>{event.ticketPrice}</EventPrice> {/* Displays price */}
