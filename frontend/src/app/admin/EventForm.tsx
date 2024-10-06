@@ -17,26 +17,34 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   const [ticketAmount, setTicketAmount] = useState('');
   const [ticketsPerAccount, setTicketsPerAccount] = useState('');
   const [organiserAddress, setOrganiserAddress] = useState('');
+  const [eventPoster, setEventPoster] = useState<File | null>(null); // Added eventPoster state
   const [step, setStep] = useState(1);
 
-	const handleSubmit = () => {
-	  const eventData = {
-		eventName,
-		eventDate,
-		eventTime,
-		eventVenue,
-		eventDescription,
-		ticketPrice: `${ticketPrice} ETH`,
-		ticketAmount,
-		ticketsPerAccount,
-		organiserAddress,
-	  };
-	  onSubmit(eventData);
-	  alert('Successfully created event');
-	};
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setEventPoster(e.target.files[0]);
+    }
+  };
 
-	return (
-		<CenteredContainer>
+  const handleSubmit = () => {
+    const eventData = {
+      eventName,
+      eventDate,
+      eventTime,
+      eventVenue,
+      eventDescription,
+      ticketPrice: `${ticketPrice} ETH`,
+      ticketAmount,
+      ticketsPerAccount,
+      organiserAddress,
+      eventPoster: eventPoster ? URL.createObjectURL(eventPoster) : '', // Include eventPoster
+    };
+    onSubmit(eventData);
+    alert('Successfully created event');
+  };
+
+  return (
+    <CenteredContainer>
       <FormContainer>
         <BoldHeading>New Event</BoldHeading>
         {step === 1 && (
@@ -107,13 +115,18 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
               value={organiserAddress}
               onChange={(e) => setOrganiserAddress(e.target.value)}
             />
+            <p>Event Poster</p>
+            <Input
+              type='file'
+              onChange={handleFileChange}
+            />  {/* Moved event poster input here */}
             <Button onClick={handleSubmit}>Create Event</Button>
           </>
         )}
       </FormContainer>
     </CenteredContainer>
-	);
-  };
+  );
+};
 
 export default EventForm;
 
@@ -133,7 +146,6 @@ const CenteredContainer = styled.div`
   min-height: 100vh;
   text-align: center;
 `;
-
 
 const FormContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.4); /* 50% transparency */
@@ -167,4 +179,4 @@ const Button = styled.button`
   &:hover {
     background-color: #005bb5;
   }
-`
+`;

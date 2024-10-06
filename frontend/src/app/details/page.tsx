@@ -73,7 +73,7 @@ const DetailsPage: React.FC<DetailsPageProps> = ({ eventId }) => {
       <HeaderImage src="/images/eventbackground.jpeg" alt="HeaderImage" />
       <MainContainer>
         <TextContainer>
-          <WorldTourSign>WORLD TOUR</WorldTourSign>
+        <WorldTourSign>{`Event ${event.id}`}</WorldTourSign>
           <Title>{event.eventName}</Title>
           <Description>Don't miss the chance, get your ticket now!</Description>
           <Description>Location: {event.eventVenue}</Description>
