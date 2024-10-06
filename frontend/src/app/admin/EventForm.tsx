@@ -17,13 +17,13 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   const [ticketAmount, setTicketAmount] = useState('');
   const [ticketsPerAccount, setTicketsPerAccount] = useState('');
   const [organiserAddress, setOrganiserAddress] = useState('');
-  const [eventPoster, setEventPoster] = useState<File | null>(null); // Added eventPoster state
+  // const [eventPoster, setEventPoster] = useState<File | null>(null); // Added eventPoster state
   const [step, setStep] = useState(1);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setEventPoster(e.target.files[0]);
-    }
+    // if (e.target.files && e.target.files.length > 0) {
+    //   setEventPoster(e.target.files[0]);
+    // }
   };
 
   const handleSubmit = () => {
@@ -37,7 +37,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
       ticketAmount,
       ticketsPerAccount,
       organiserAddress,
-      eventPoster: eventPoster ? URL.createObjectURL(eventPoster) : '', // Include eventPoster
+      // eventPoster: eventPoster ? URL.createObjectURL(eventPoster) : '', // Include eventPoster
     };
     onSubmit(eventData);
     alert('Successfully created event');
@@ -115,7 +115,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
               value={organiserAddress}
               onChange={(e) => setOrganiserAddress(e.target.value)}
             />
-            <p>Event Poster</p>
+            {/* <p>Event Poster</p>
             <Input
               type='file'
               onChange={handleFileChange}

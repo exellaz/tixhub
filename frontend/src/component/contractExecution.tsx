@@ -39,6 +39,8 @@ export async function mintToken(eventId) {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
 
+    contract.methods.getOccasion(3).call().then(console.log); // check does the event exist in the blockchain
+
     let exportNullifier = localStorage.getItem('nullifierHash')
     let eventTicketPrice = localStorage.getItem('eventTicketPrice')
     console.log(exportNullifier); // check does nullifier hash is stored in local storage
