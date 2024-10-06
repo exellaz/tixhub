@@ -1,7 +1,7 @@
 import { CONTRACT_ADDRESS } from './contractAddress';
 import { Web3 } from 'web3';
 import ABI from './ABI.json';
-import EventInfo from '../app/event/eventInfo.json';
+import EventInfo from '../app/admin/events.json';
 
 declare global {
     interface Window {
@@ -12,22 +12,22 @@ declare global {
 const web3 = new Web3(window.ethereum);
 const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
 
-export async function init() {
+export async function createEvent(newEvent: any) {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
 
     try {
-        const event = EventInfo[0];
+        const event = newEvent;
         const createOccasion = contract.methods.createOccasion(
-            event.organizer,
-            event.name,
-            event.description,
-            event.cost,
-            event.maxTickets,
-            event.ticketsPerUser,
-            event.date,
-            event.time,
-            event.location,
+            event.organiserAddress,
+            event.eventName,
+            event.eventDescription,
+            event.ticketPrice,
+            event.ticketAmount,
+            event.ticketsPerAccount,
+            event.eventDate,
+            event.eventTime,
+            event.eventVenue,
             ).send({ from: defaultAccount });
         console.log(createOccasion);
     } catch (error) {
@@ -35,18 +35,20 @@ export async function init() {
     }
 };
 
-export async function mintToken() {
+export async function mintToken(eventId) {
     const account = await web3.eth.getAccounts();
     const defaultAccount = account[0];
 
     let exportNullifier = localStorage.getItem('nullifierHash')
+    let eventTicketPrice = localStorage.getItem('eventTicketPrice')
     console.log(exportNullifier); // check does nullifier hash is stored in local storage
+    console.log(eventTicketPrice); // check does event ticket price is stored in local storage
 
     try {
         const createOccasion = contract.methods.mint(
-            "3",
+            eventId,
             exportNullifier
-            ).send({ from: defaultAccount, value: EventInfo[0].cost });
+            ).send({ from: defaultAccount, value: eventTicketPrice });
         console.log(createOccasion);
     } catch (error) {
         console.error(error);

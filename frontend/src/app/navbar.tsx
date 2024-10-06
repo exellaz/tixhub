@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { useWallet } from '../component/walletConnect';
 import Image from 'next/image';
 import { useState, useEffect } from 'react'; // Import useState and useEffect
+import { Web3 } from 'web3'; // Import Web3
+import ABI from '../component/ABI.json'; // Import ABI
+import { CONTRACT_ADDRESS } from '../component/contractAddress'; // Import CONTRACT_ADDRESS
 
 const NavBar = () => {
   const { defaultAccount, connectWallet, disconnectWallet } = useWallet();
@@ -23,25 +26,37 @@ const NavBar = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  // Check if the connected address is the admin address
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
+  console.log("default: ", defaultAccount);
+ 
   useEffect(() => {
-    const adminAddress = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'.toLowerCase();
-    if (defaultAccount && defaultAccount.toLowerCase() === adminAddress) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
-    }
+    const fetchOwnerAddress = async () => {
+      try {
+        const adminAddress = await contract.methods.owner().call();
+        console.log("admin: ", adminAddress);
+        if (defaultAccount && defaultAccount === adminAddress.toLowerCase()) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error fetching owner address:", error);
+      }
+    };
+  
+    fetchOwnerAddress();
   }, [defaultAccount]);
 
   return (
     <NavBarContainer>
       <NavBarContent>
-        <Branding>TicketPlatform</Branding>
+        <Branding>TixHub</Branding>
         <NavLinks>
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/event">Event</NavLink>
-          <NavLink href="/profile">Profile</NavLink>
-          {isAdmin && <NavLink href="/admin">Admin</NavLink>}
+          <NavLink href="/"><HomeNav>Home</HomeNav></NavLink>
+          <NavLink href="/event"><EventNav>Event</EventNav></NavLink>
+          <NavLink href="/profile"><ProfileNav>Profile</ProfileNav></NavLink>
+          {isAdmin && <NavLink href="/admin"><AdminNav>Admin</AdminNav></NavLink>}
         </NavLinks>
         {defaultAccount ? (
           <UserAddress>
@@ -63,6 +78,90 @@ const NavBar = () => {
 };
 
 /////////////////////////////// STYLING ///////////////////////////////////
+const HomeNav = styled.div`
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    border-bottom: 3px solid #f2f2f2;
+  }
+  &:active {
+  border-bottom: 3px solid #f2f2f2;
+  }
+  &:focus {
+    outline: none; /* Remove default focus outline */
+    border-bottom: 3px solid #f2f2f2;
+  }
+`;
+
+const EventNav = styled.div`
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    border-bottom: 3px solid #f2f2f2;
+  }
+  &:active {
+  border-bottom: 3px solid #f2f2f2;
+  }
+  &:focus {
+    outline: none; /* Remove default focus outline */
+    border-bottom: 3px solid #f2f2f2;
+  }
+`;
+
+const ProfileNav = styled.div`
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    border-bottom: 3px solid #f2f2f2;
+  }
+  &:active {
+  border-bottom: 3px solid #f2f2f2;
+  }
+  &:focus {
+    outline: none; /* Remove default focus outline */
+    border-bottom: 3px solid #f2f2f2;
+  }
+`;
+
+const AdminNav = styled.div`
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    border-bottom: 3px solid #f2f2f2;
+  }
+  &:active {
+  border-bottom: 3px solid #f2f2f2;
+  }
+  &:focus {
+    outline: none; /* Remove default focus outline */
+    border-bottom: 3px solid #f2f2f2;
+  }
+`;
+
 const NavBarContainer = styled.nav`
   background-color: black;
   padding: 1rem;
