@@ -24,5 +24,18 @@
     "organiserAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
     "eventPoster": "blob:http://localhost:3000/67761b6b-9e22-4a5e-8c9a-31c058972372",
     "id": 2
+  },
+  {
+    "eventName": "eqw",
+    "eventDate": "2024-10-06",
+    "eventTime": "09:48",
+    "eventVenue": "eqeqw",
+    "eventDescription": "weqeq",
+    "ticketPrice": "1",
+    "ticketAmount": "1",
+    "ticketsPerAccount": "1",
+    "organiserAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "eventPoster": "blob:http://localhost:3000/8a8213d2-9068-4e62-b9a8-5ce012eb7a1c",
+    "id": 3
   }
 ]

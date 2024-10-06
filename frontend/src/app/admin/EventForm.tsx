@@ -33,7 +33,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
       eventTime,
       eventVenue,
       eventDescription,
-      ticketPrice: `${ticketPrice} ETH`,
+      ticketPrice,
       ticketAmount,
       ticketsPerAccount,
       organiserAddress,
