@@ -1,4 +1,11 @@
-# tixhub
+# TIXHUB
+
+### The problem Tixhub solves
+1. Reduces the effects of scalpers.
+2. Improves the lack of community engagement.
+3. Helps organizers control ticket resales.
+4. Prevents sybil attacks.
+
 # TO LAUNCH TIXHUB
 
 ### Front-end: 	
