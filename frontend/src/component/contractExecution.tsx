@@ -29,7 +29,27 @@ export async function createEvent(newEvent: any) {
             event.eventTime,
             event.eventVenue,
             ).send({ from: defaultAccount });
-        console.log(createOccasion);
+        // console.log(createOccasion);
+		if ((await createOccasion).status) {
+			try {
+				const response = await fetch('http://localhost:3001/api/events', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(event),
+				});
+	
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+	
+				const result = await response.json();
+				console.log(result);
+			} catch (error) {
+				console.error('Error:', error);
+			}
+		}
     } catch (error) {
         console.error(error);
     }

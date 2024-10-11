@@ -3,7 +3,7 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-web3-v4": "^1.0.0",
-    "hardhat": "^2.22.12",
+    "hardhat": "^2.22.13",
     "web3": "^4.13.0"
   },
   "dependencies": {
