@@ -1,10 +1,10 @@
-# TIXHUB
+# 🎫 TIXHUB
 
-### The problem Tixhub solves
-1. Reduces the effects of scalpers.
-2. Improves the lack of community engagement.
-3. Helps organizers control ticket resales.
-4. Prevents sybil attacks.
+### 🤔 The problem
+<img src="https://github.com/exellaz/tixhub/blob/main/frontend/public/pitch/2.png" width="640" height="420"/>
+
+### ✍️ MAIN IDEA
+<img src="https://github.com/exellaz/tixhub/blob/main/frontend/public/pitch/3.png" width="640" height="420"/>
 
 # TO LAUNCH TIXHUB
 
@@ -14,10 +14,11 @@
 ### Back-end：
 1) cd frontend/src/app/admin && node server.js
 
-### Back-end contract: （ for testing contract purpose ）
-1) cd contract && npm hardhat node
-2) cd contract && npx hardhat ignition deploy ignition/modules/Occasion.js --network localhost
-3) paste the contract id to frontend/src/component/contractAddress.ts
+> [!Note]
+> Back-end contract
+> 1) cd contract && npm hardhat node
+> 2) cd contract && npx hardhat ignition deploy ignition/modules/Occasion.js --network localhost
+> 3) paste the contract id to frontend/src/component/contractAddress.ts
 
 
 ## CONTRACT INSTALLATION
