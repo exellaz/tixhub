@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { EventData } from './types';
-import { createEvent } from '../../component/contractExecution';
 
 interface EventFormProps {
   onSubmit: (eventData: EventData) => void;
@@ -17,14 +16,19 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   const [ticketAmount, setTicketAmount] = useState('');
   const [ticketsPerAccount, setTicketsPerAccount] = useState('');
   const [organiserAddress, setOrganiserAddress] = useState('');
-  // const [eventPoster, setEventPoster] = useState<File | null>(null); // Added eventPoster state
+  const [eventPoster, setEventPoster] = useState<File | null>(null); // Added eventPoster state
   const [step, setStep] = useState(1);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (e.target.files && e.target.files.length > 0) {
-    //   setEventPoster(e.target.files[0]);
-    // }
-  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const file = event.target.files?.[0]; // Get the image file
+	if (file) {
+		const reader = new FileReader(); //allows web applications to read the contents of files stored on a user's computer
+		reader.onloadend = () => {  // When the file is loaded
+			setEventPoster(reader.result as string); // Set the eventPoster state to the data URL
+		};
+		reader.readAsDataURL(file); //read the content of the file and encode it as a base64 data URL
+	}
+};
 
   const handleSubmit = () => {
     const eventData = {
@@ -37,7 +41,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
       ticketAmount,
       ticketsPerAccount,
       organiserAddress,
-      // eventPoster: eventPoster ? URL.createObjectURL(eventPoster) : '', // Include eventPoster
+      eventPoster: eventPoster,// Include eventPoster
     };
     onSubmit(eventData);
     alert('Successfully created event');
@@ -115,7 +119,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
               value={organiserAddress}
               onChange={(e) => setOrganiserAddress(e.target.value)}
             />
-            {/* <p>Event Poster</p>
+            <p>Event Poster</p>
             <Input
               type='file'
               onChange={handleFileChange}

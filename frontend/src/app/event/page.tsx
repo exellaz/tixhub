@@ -28,25 +28,6 @@ const EventPage: React.FC = () => {
     setSelectedEventId(eventId); // Set the selected event ID when clicked
   };
 
-  const handleFormSubmit = async (formData: FormData) => {
-    try {
-      const response = await fetch('/api/events', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create event');
-      }
-
-      const newEvent = await response.json();
-      console.log('Event created:', newEvent);
-      // Optionally, update the local state or refetch the events list
-    } catch (error) {
-      console.error('Error creating event:', error);
-    }
-  };
-
   return (
     <Container>
       {selectedEventId === null ? (

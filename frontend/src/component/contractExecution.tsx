@@ -1,7 +1,6 @@
 import { CONTRACT_ADDRESS } from './contractAddress';
 import { Web3 } from 'web3';
 import ABI from './ABI.json';
-import EventInfo from '../app/admin/events.json';
 
 declare global {
     interface Window {
@@ -29,9 +28,9 @@ export async function createEvent(newEvent: any) {
             event.eventTime,
             event.eventVenue,
             ).send({ from: defaultAccount });
-        // console.log(createOccasion);
-		if ((await createOccasion).status) {
-			try {
+        console.log(createOccasion); // check does the transaction is successful
+		if ((await createOccasion).status) { //if the transaction is successful
+			try { //try to send the event data to the backend server
 				const response = await fetch('http://localhost:3001/api/events', {
 					method: 'POST',
 					headers: {
